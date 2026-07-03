@@ -1,0 +1,42 @@
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+  gap: 0.75rem;
+}
+
+.loading-screen__logo {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 500;
+  color: var(--rose-gold);
+  letter-spacing: 0.04em;
+}
+
+.loading-screen__tagline {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.loading-screen__bar {
+  width: 160px;
+  height: 2px;
+  background: var(--soft-pink);
+  border-radius: 2px;
+  margin-top: 1.5rem;
+  overflow: hidden;
+}
+
+.loading-screen__bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--soft-pink), var(--rose-gold));
+  border-radius: 2px;
+}

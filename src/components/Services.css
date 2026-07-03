@@ -1,0 +1,132 @@
+.services__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+.services__tab {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.6rem 1.25rem;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-full);
+  background: var(--card-bg);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.services__tab:hover {
+  border-color: var(--rose-gold);
+  color: var(--rose-gold);
+}
+
+.services__tab--active {
+  background: var(--rose-gold);
+  border-color: var(--rose-gold);
+  color: var(--white);
+}
+
+.services__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+}
+
+.service-category {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 24px var(--shadow-color);
+  border: 1px solid var(--border-color);
+  border-top: 3px solid var(--rose-gold);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.service-category:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(183, 110, 121, 0.12);
+}
+
+.service-category__title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.service-category__icon {
+  color: var(--rose-gold);
+  font-size: 0.75rem;
+}
+
+.service-category__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.service-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 1rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  border-left: 2px solid transparent;
+  transition: all 0.3s ease;
+  gap: 1rem;
+}
+
+.service-card:hover {
+  background: var(--soft-pink);
+  border-left-color: var(--rose-gold);
+  padding-left: 1.2rem;
+}
+
+[data-theme='dark'] .service-card:hover {
+  background: rgba(248, 215, 218, 0.08);
+}
+
+.service-card__name {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+.service-card__price {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--rose-gold);
+  white-space: nowrap;
+}
+
+.services__cta {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+@media (max-width: 1024px) {
+  .services__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .services__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .service-category {
+    padding: 1.5rem;
+  }
+}

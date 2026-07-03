@@ -1,0 +1,45 @@
+.page-banner {
+  position: relative;
+  padding: calc(var(--nav-height) + 4rem) 1.5rem 4rem;
+  text-align: center;
+  background:
+    linear-gradient(135deg, rgba(183, 110, 121, 0.85), rgba(248, 215, 218, 0.9)),
+    url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=1200&q=80') center / cover no-repeat;
+  color: var(--white);
+}
+
+.page-banner__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.page-banner__content {
+  position: relative;
+  z-index: 1;
+}
+
+.page-banner__eyebrow {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  opacity: 0.9;
+}
+
+.page-banner__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.page-banner__desc {
+  font-size: 0.95rem;
+  max-width: 520px;
+  margin: 0 auto;
+  opacity: 0.9;
+  line-height: 1.7;
+}

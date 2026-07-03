@@ -1,0 +1,211 @@
+/* ============================================
+   LooksByLeema Beauty Studio — Global Styles
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap');
+
+/* Light theme (default) */
+:root,
+[data-theme='light'] {
+  --soft-pink: #F8D7DA;
+  --rose-gold: #B76E79;
+  --white: #FFFFFF;
+  --black: #000000;
+
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #FDF8F8;
+  --text-primary: #000000;
+  --text-secondary: #5a5a5a;
+  --card-bg: #FFFFFF;
+  --border-color: rgba(183, 110, 121, 0.2);
+  --shadow-color: rgba(0, 0, 0, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+
+  --nav-text: #FFFFFF;
+  --nav-bg-scrolled: rgba(255, 255, 255, 0.92);
+  --mobile-menu-bg: rgba(255, 255, 255, 0.98);
+
+  --footer-bg: #000000;
+  --footer-text: #FFFFFF;
+  --footer-copy: rgba(255, 255, 255, 0.4);
+
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Poppins', sans-serif;
+
+  --nav-height: 80px;
+  --radius-sm: 8px;
+  --radius-lg: 16px;
+  --radius-full: 999px;
+}
+
+/* Dark theme */
+[data-theme='dark'] {
+  --bg-primary: #0f0f0f;
+  --bg-secondary: #1a1a1a;
+  --text-primary: #FFFFFF;
+  --text-secondary: #b0b0b0;
+  --card-bg: #1e1e1e;
+  --border-color: rgba(248, 215, 218, 0.15);
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --glass-bg: rgba(30, 30, 30, 0.8);
+
+  --nav-text: #FFFFFF;
+  --nav-bg-scrolled: rgba(15, 15, 15, 0.95);
+  --mobile-menu-bg: rgba(20, 20, 20, 0.98);
+
+  --footer-bg: #0a0a0a;
+}
+
+[data-theme='dark'] .navbar--scrolled .navbar__logo,
+[data-theme='dark'] .navbar--scrolled .navbar__link {
+  color: var(--text-primary);
+}
+
+[data-theme='light'] .navbar--scrolled .navbar__logo,
+[data-theme='light'] .navbar--scrolled .navbar__link {
+  color: var(--text-primary);
+}
+
+[data-theme='light'] .navbar--scrolled .navbar__hamburger span {
+  background: var(--text-primary);
+}
+
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  line-height: 1.7;
+  overflow-x: hidden;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Main content area */
+.main-content {
+  min-height: calc(100vh - var(--nav-height));
+}
+
+/* Sections */
+.section {
+  padding: 6rem 0;
+}
+
+.section--alt {
+  background: var(--bg-secondary);
+}
+
+.section--compact {
+  padding-top: 3rem;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 1rem 2.25rem;
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn--primary {
+  background: linear-gradient(135deg, var(--rose-gold), #9a5560);
+  color: var(--white);
+  box-shadow: 0 4px 20px rgba(183, 110, 121, 0.35);
+}
+
+.btn--primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(183, 110, 121, 0.45);
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--white);
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+.btn--outline:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--white);
+  transform: translateY(-3px);
+}
+
+.btn--sm {
+  padding: 0.65rem 1.5rem;
+  font-size: 0.7rem;
+}
+
+.btn--full {
+  width: 100%;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .section {
+    padding: 4rem 0;
+  }
+
+  :root {
+    --nav-height: 70px;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn {
+    padding: 0.85rem 1.75rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

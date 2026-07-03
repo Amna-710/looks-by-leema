@@ -1,0 +1,112 @@
+.booking__wrapper {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.booking__form {
+  background: var(--card-bg);
+  padding: 2.5rem;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 32px var(--shadow-color);
+  border: 1px solid var(--border-color);
+}
+
+.booking__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--rose-gold);
+  box-shadow: 0 0 0 3px rgba(183, 110, 121, 0.12);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-input--error {
+  border-color: #e74c6f !important;
+}
+
+.form-error {
+  display: block;
+  font-size: 0.75rem;
+  color: #e74c6f;
+  margin-top: 0.35rem;
+}
+
+.booking__notice {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding: 0.85rem;
+  background: var(--soft-pink);
+  border-radius: var(--radius-sm);
+}
+
+[data-theme='dark'] .booking__notice {
+  background: rgba(248, 215, 218, 0.1);
+}
+
+.booking__notice strong {
+  color: var(--rose-gold);
+}
+
+.booking__success {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #2d8a4e;
+  font-weight: 500;
+}
+
+.booking__submit-error {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 640px) {
+  .booking__form {
+    padding: 1.75rem;
+  }
+
+  .booking__row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
