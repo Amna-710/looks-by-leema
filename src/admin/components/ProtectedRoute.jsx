@@ -1,9 +1,9 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 
-/** Redirects unauthenticated users to admin login */
+/** Redirects unauthenticated or non-admin users to admin login */
 export default function ProtectedRoute({ children }) {
-  const { user, loading, isConfigured } = useAuth();
+  const { user, loading, isAdmin, isConfigured } = useAuth();
   const location = useLocation();
 
   if (loading) {
@@ -24,7 +24,7 @@ export default function ProtectedRoute({ children }) {
     );
   }
 
-  if (!user) {
+  if (!user || !isAdmin) {
     return <Navigate to="/admin/login" state={{ from: location }} replace />;
   }
 

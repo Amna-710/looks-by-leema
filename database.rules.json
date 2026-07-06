@@ -3,11 +3,11 @@
     "site": {
       "settings": {
         ".read": true,
-        ".write": "auth != null"
+        ".write": "auth != null && auth.token.email_verified === true && auth.token.email === 'looksbyleema@gmail.com'"
       },
       "testimonials": {
         ".read": true,
-        ".write": "auth != null"
+        ".write": "auth != null && auth.token.email_verified === true && auth.token.email === 'looksbyleema@gmail.com'"
       }
     }
   }

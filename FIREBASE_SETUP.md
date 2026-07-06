@@ -34,12 +34,18 @@ Restart the dev server after changing `.env`.
 ## 4. Enable Authentication
 
 1. Firebase Console → **Authentication** → **Get started**
-2. **Sign-in method** → Enable **Email/Password**
-3. **Users** → **Add user** → create your admin account
+2. **Sign-in method** → Enable **Email/Password** (do **not** enable public sign-up in the app)
+3. **Users** → **Add user** → create your admin account:
+   - Email: `looksbyleema@gmail.com`
+   - Password: (strong password — only you should know this)
+4. **Authentication → Settings → Authorized domains** — add your live domain:
+   - `www.looksbyleema.com`
+   - `looksbyleema.com`
+   - `localhost` (for local development)
 
-Example:
-- Email: `admin@looksbyleema.com`
-- Password: (strong password)
+Only `looksbyleema@gmail.com` can access the admin panel. Remove any test users from **Authentication → Users** in Firebase Console.
+
+Deploy updated security rules (see sections 5–7) so Firestore, Storage, and RTDB only allow writes from this verified admin email.
 
 ## 5. Create Firestore Database
 
@@ -114,7 +120,8 @@ Or paste `storage.rules` in **Storage → Rules** tab.
 
 ## Security Notes
 
-- Only authenticated admins can edit services, policies, and gallery
-- Anyone can submit bookings (create only)
+- Only `looksbyleema@gmail.com` (verified) can access the admin panel and write data
+- Remove any test/demo users from Firebase Authentication → Users
+- Anyone can submit bookings (create only) on the public site
 - Public site reads services and policies without auth
 - Never commit `.env` to version control

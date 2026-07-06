@@ -13,6 +13,7 @@ import {
 } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { db, storage, auth, isFirebaseConfigured } from '../firebase/config';
+import { isAdminUser } from '../config/admin';
 import { assertFirestoreReady, logFirestoreError, formatFirestoreError } from '../firebase/firestoreReady';
 import { serviceCategories as defaultServices } from '../data/services';
 import { defaultPolicies } from '../data/defaultPolicies';
@@ -37,11 +38,14 @@ function requireFirebase() {
   }
 }
 
-/** Admin writes require an authenticated user (Firestore rules) */
+/** Admin writes require a verified admin account (Firestore rules) */
 function requireAuth() {
   requireFirebase();
   if (!auth?.currentUser) {
     throw new Error('You must be logged in to perform this action. Please sign in again.');
+  }
+  if (!isAdminUser(auth.currentUser)) {
+    throw new Error('Your account is not authorized for admin actions.');
   }
 }
 

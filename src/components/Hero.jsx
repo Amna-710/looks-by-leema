@@ -5,7 +5,9 @@ import { useSiteSettings } from '../hooks/useSiteSettings';
 import { fadeInUp } from '../utils/animations';
 import './Hero.css';
 
-/** Full-screen hero — content and image loaded from Firebase */
+const HERO_BACKGROUND = '/images/hero-background.png';
+
+/** Full-screen hero — background image with content from Firebase */
 export default function Hero() {
   const { settings } = useSiteSettings();
   const { hero } = settings;
@@ -14,14 +16,17 @@ export default function Hero() {
     target: ref,
     offset: ['start start', 'end start'],
   });
-  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
+  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
     <section className="hero" ref={ref}>
-      <motion.div className="hero__bg" style={{ y: bgY }}>
-        <img src={hero.imageUrl} alt="LooksByLeema Beauty Studio" />
-      </motion.div>
+      <motion.div
+        className="hero__bg"
+        style={{ y: bgY, backgroundImage: `url(${HERO_BACKGROUND})` }}
+        role="img"
+        aria-label="LooksByLeema Beauty Studio"
+      />
       <div className="hero__overlay" />
 
       <motion.div className="hero__content container" style={{ opacity }}>

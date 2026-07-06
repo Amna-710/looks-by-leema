@@ -23,11 +23,15 @@ export default function AdminLogin() {
     try {
       await login(email, password);
     } catch (err) {
-      setError(
-        err.code === 'auth/invalid-credential'
-          ? 'Invalid email or password'
-          : err.message || 'Login failed'
-      );
+      if (err.code === 'auth/invalid-credential') {
+        setError('Invalid email or password');
+      } else if (err.code === 'auth/unauthorized-admin') {
+        setError('This email is not authorized for admin access.');
+      } else if (err.code === 'auth/email-not-verified') {
+        setError(err.message);
+      } else {
+        setError(err.message || 'Login failed');
+      }
     } finally {
       setSubmitting(false);
     }
@@ -57,7 +61,7 @@ export default function AdminLogin() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@looksbyleema.com"
+                placeholder="looksbyleema@gmail.com"
                 required
                 autoComplete="email"
               />

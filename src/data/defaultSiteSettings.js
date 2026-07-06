@@ -6,8 +6,7 @@ export const defaultSiteSettings = {
     subtitle: "Beauty is more than a service — it's an experience.",
     description:
       'Enhancing your natural beauty with makeup, facials, waxing, hair, nail, and lash services in Queens, NY.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1487412940907-5fbf55ae63f0?w=1920&q=80',
+    imageUrl: '/images/hero-background.png',
   },
   welcome: {
     title: 'Welcome to LooksByLeema',
@@ -15,7 +14,7 @@ export const defaultSiteSettings = {
   },
   contact: {
     location: 'Queens, NY',
-    email: 'hello@looksbyleema.com',
+    email: 'looksbyleema@gmail.com',
     phone: '(555) 123-4567',
     instagram: 'https://instagram.com',
     facebook: 'https://facebook.com',
