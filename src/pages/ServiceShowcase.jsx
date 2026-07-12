@@ -8,6 +8,7 @@ import SoftGlamHeroBackground from '../components/SoftGlamHeroBackground';
 import FacialTreatments from '../components/FacialTreatments';
 import NailsExperience from '../components/NailsExperience';
 import WaxingExperience from '../components/WaxingExperience';
+import HairExperience from '../components/HairExperience';
 import { fadeInUp } from '../utils/animations';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
@@ -33,6 +34,7 @@ export default function ServiceShowcasePage() {
   const isFacials = slug === 'facials';
   const isNails = slug === 'nails';
   const isWaxing = slug === 'waxing';
+  const isHair = slug === 'hair';
 
   // Soft Glam gallery: mixed random order once per page load
   const [galleryImages] = useState(() => {
@@ -152,6 +154,8 @@ export default function ServiceShowcasePage() {
         <NailsExperience services={service.nailServices} gallery={service.gallery} />
       ) : isWaxing ? (
         <WaxingExperience services={service.waxServices} />
+      ) : isHair ? (
+        <HairExperience services={service.hairServices} lookbook={service.lookbook} />
       ) : (
         <>
           <section className="svc-gallery section">

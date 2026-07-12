@@ -177,24 +177,86 @@ export const SERVICE_SHOWCASES = {
     description:
       'Elegant hair services crafted to complement your look — from polished styling to glamorous finishing touches that feel luxurious and wearable.',
     heroImages: [img('hair', 'hero-1.png'), img('hair', 'hero-2.png')],
-    gallery: [
-      img('hair', 'gallery-1.png'),
-      img('hair', 'gallery-2.png'),
-      img('hair', 'gallery-3.png'),
-      img('hair', 'gallery-4.png'),
-    ],
-    sections: [
+    gallery: [],
+    hairServices: [
       {
-        title: 'Style that speaks for you',
-        text: 'From soft waves to sleek finishes, our hair services are tailored to your face shape, occasion, and personal aesthetic.',
-        image: img('hair', 'gallery-1.png'),
+        id: 'haircut',
+        label: 'Precision Style',
+        name: 'Haircut',
+        image: img('hair', 'haircut.png'),
+        description:
+          'Transform your look with our professional haircut service, designed to enhance your features and create a style that matches your personality. Our expert stylists provide precision cuts with a flawless finish.',
       },
       {
-        title: 'Luxury in every detail',
-        text: 'We focus on healthy-looking shine, lasting hold, and a finish that photographs beautifully — so you feel camera-ready and confident.',
-        image: img('hair', 'gallery-2.png'),
+        id: 'blow-dry',
+        label: 'Polished Glam',
+        name: 'Blow Dry',
+        image: img('hair', 'blow-dry.png'),
+        description:
+          'Enjoy a salon-quality blow dry that adds volume, smoothness, and shine to your hair. Perfect for achieving a polished and glamorous look for any occasion.',
+      },
+      {
+        id: 'hair-wash',
+        label: 'Refresh Ritual',
+        name: 'Hair Wash',
+        image: img('hair', 'hair-wash.png'),
+        description:
+          'Relax and refresh your hair with our gentle hair wash service. Our treatment deeply cleanses your hair and scalp, leaving your hair feeling fresh, soft, and revitalized.',
+      },
+      {
+        id: 'keratin',
+        label: 'Smooth Treatment',
+        name: 'Keratin Treatment',
+        image: img('hair', 'keratin.png'),
+        description:
+          'Experience silky, smooth, and manageable hair with our premium keratin treatment. It helps reduce frizz, restore shine, and give your hair a healthier appearance.',
       },
     ],
+    lookbook: [
+      {
+        id: 'bridal',
+        title: 'Bridal Hairstyle',
+        description:
+          'Elegant bridal styling designed to create a graceful and unforgettable appearance.',
+        image: img('hair', 'lookbook/bridal.png'),
+      },
+      {
+        id: 'party',
+        title: 'Party Hairstyle',
+        description:
+          'Glamorous hairstyles perfect for special events and celebrations.',
+        image: img('hair', 'lookbook/party.png'),
+      },
+      {
+        id: 'curls-waves',
+        title: 'Curls & Waves',
+        description:
+          'Beautiful curls and waves that add texture, volume, and a feminine touch.',
+        image: img('hair', 'lookbook/curls-waves.png'),
+      },
+      {
+        id: 'classic-layers',
+        title: 'Classic Layers',
+        description:
+          'A timeless layered style that adds movement, volume, and a soft elegant finish.',
+        image: img('hair', 'lookbook/classic-layers.png'),
+      },
+      {
+        id: 'modern-bob',
+        title: 'Modern Bob Cut',
+        description:
+          'A chic and stylish haircut that creates a fresh, confident, and modern look.',
+        image: img('hair', 'lookbook/modern-bob.png'),
+      },
+      {
+        id: 'braided-waves',
+        title: 'Braided Waves',
+        description:
+          'Intricate braids meeting soft, voluminous waves — a sophisticated look for any special occasion.',
+        image: img('hair', 'lookbook/braided-waves.png'),
+      },
+    ],
+    sections: [],
   },
   nails: {
     slug: 'nails',
