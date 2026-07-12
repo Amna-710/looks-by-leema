@@ -1,0 +1,260 @@
+.lash-exp {
+  background: var(--bg-primary);
+}
+
+.lash-intro__inner {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.lash-intro__eyebrow {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--rose-gold);
+  margin-bottom: 0.65rem;
+}
+
+.lash-intro__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.85rem, 4vw, 2.6rem);
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.85rem;
+}
+
+.lash-intro__text {
+  color: var(--text-secondary);
+  font-size: 0.98rem;
+  line-height: 1.8;
+}
+
+.lash-feature {
+  margin-bottom: 1.75rem;
+}
+
+.lash-feature__media {
+  position: relative;
+  border-radius: 1.35rem;
+  overflow: hidden;
+  min-height: 420px;
+  aspect-ratio: 21 / 9;
+  box-shadow: 0 18px 50px rgba(20, 12, 16, 0.16);
+}
+
+.lash-feature__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.7s ease;
+}
+
+.lash-feature:hover .lash-feature__media img {
+  transform: scale(1.04);
+}
+
+.lash-feature__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(15, 10, 12, 0.72) 0%,
+    rgba(15, 10, 12, 0.35) 48%,
+    rgba(15, 10, 12, 0.15) 100%
+  );
+  pointer-events: none;
+}
+
+.lash-feature__copy {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+  max-width: 480px;
+  padding: 2rem 2.25rem;
+  color: var(--white);
+}
+
+.lash-feature__label,
+.lash-card__label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--soft-pink);
+  margin-bottom: 0.5rem;
+}
+
+.lash-feature__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.35);
+}
+
+.lash-feature__desc {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  opacity: 0.92;
+  margin-bottom: 1.15rem;
+}
+
+.lash-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.25rem;
+}
+
+.lash-card {
+  grid-column: span 6;
+  display: flex;
+  flex-direction: column;
+}
+
+.lash-card--1 {
+  grid-column: span 7;
+}
+
+.lash-card--2 {
+  grid-column: span 5;
+}
+
+.lash-card--3 {
+  grid-column: span 5;
+}
+
+.lash-card--4 {
+  grid-column: span 7;
+}
+
+.lash-card__media {
+  position: relative;
+  border-radius: 1.15rem;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  box-shadow: 0 12px 36px rgba(20, 12, 16, 0.12);
+  background: #1a1214;
+}
+
+.lash-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.65s ease;
+}
+
+.lash-card:hover .lash-card__media img {
+  transform: scale(1.06);
+}
+
+.lash-card__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(15, 10, 12, 0.78) 0%,
+    rgba(15, 10, 12, 0.15) 55%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.lash-card__overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  padding: 1.25rem 1.35rem;
+  color: var(--white);
+}
+
+.lash-card__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.5vw, 1.7rem);
+  font-weight: 500;
+  line-height: 1.2;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
+.lash-card__desc {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin: 0.85rem 0 0.75rem;
+  padding: 0 0.15rem;
+}
+
+.lash-card__link {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--rose-gold);
+  text-decoration: none;
+  padding: 0 0.15rem;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.lash-card__link:hover {
+  color: #9a5560;
+  transform: translateX(3px);
+}
+
+@media (max-width: 900px) {
+  .lash-feature__media {
+    aspect-ratio: 16 / 10;
+    min-height: 360px;
+  }
+
+  .lash-card,
+  .lash-card--1,
+  .lash-card--2,
+  .lash-card--3,
+  .lash-card--4 {
+    grid-column: span 6;
+  }
+}
+
+@media (max-width: 700px) {
+  .lash-feature__media {
+    aspect-ratio: 4 / 5;
+    min-height: 420px;
+  }
+
+  .lash-feature__shade {
+    background: linear-gradient(
+      to top,
+      rgba(15, 10, 12, 0.82) 0%,
+      rgba(15, 10, 12, 0.35) 55%,
+      rgba(15, 10, 12, 0.2) 100%
+    );
+  }
+
+  .lash-feature__copy {
+    max-width: none;
+    padding: 1.5rem 1.25rem;
+  }
+
+  .lash-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lash-card,
+  .lash-card--1,
+  .lash-card--2,
+  .lash-card--3,
+  .lash-card--4 {
+    grid-column: span 1;
+  }
+}

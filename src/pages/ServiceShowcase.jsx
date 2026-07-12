@@ -9,6 +9,7 @@ import FacialTreatments from '../components/FacialTreatments';
 import NailsExperience from '../components/NailsExperience';
 import WaxingExperience from '../components/WaxingExperience';
 import HairExperience from '../components/HairExperience';
+import LashesExperience from '../components/LashesExperience';
 import { fadeInUp } from '../utils/animations';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
@@ -35,6 +36,7 @@ export default function ServiceShowcasePage() {
   const isNails = slug === 'nails';
   const isWaxing = slug === 'waxing';
   const isHair = slug === 'hair';
+  const isLashes = slug === 'lashes';
 
   // Soft Glam gallery: mixed random order once per page load
   const [galleryImages] = useState(() => {
@@ -71,10 +73,10 @@ export default function ServiceShowcasePage() {
   return (
     <div className="svc-page">
       {/* Hero slideshow */}
-      <section className={`svc-hero${isSoftGlam ? ' svc-hero--soft-glam' : ''}${(isFacials || isNails || isWaxing) ? ' svc-hero--facials' : ''}${isWaxing ? ' svc-hero--waxing' : ''}`}>
+      <section className={`svc-hero${isSoftGlam ? ' svc-hero--soft-glam' : ''}${(isFacials || isNails || isWaxing || isLashes) ? ' svc-hero--facials' : ''}${isWaxing ? ' svc-hero--waxing' : ''}${isLashes ? ' svc-hero--lashes' : ''}`}>
         {isSoftGlam ? (
           <SoftGlamHeroBackground images={service.heroImages} />
-        ) : isFacials || isNails || isWaxing ? (
+        ) : isFacials || isNails || isWaxing || isLashes ? (
           <div className="svc-hero__bg-static" aria-hidden="true">
             <img
               src={service.heroImages[0]}
@@ -156,6 +158,8 @@ export default function ServiceShowcasePage() {
         <WaxingExperience services={service.waxServices} />
       ) : isHair ? (
         <HairExperience services={service.hairServices} lookbook={service.lookbook} />
+      ) : isLashes ? (
+        <LashesExperience services={service.lashServices} />
       ) : (
         <>
           <section className="svc-gallery section">

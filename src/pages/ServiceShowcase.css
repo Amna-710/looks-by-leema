@@ -56,6 +56,17 @@
   }
 }
 
+/* Lashes hero — keep eyes and lash application in frame */
+.svc-hero--lashes .svc-hero__bg-static img {
+  object-position: center 40%;
+}
+
+@media (max-width: 768px) {
+  .svc-hero--lashes .svc-hero__bg-static img {
+    object-position: center 35%;
+  }
+}
+
 .svc-hero__swiper {
   position: absolute;
   inset: 0;

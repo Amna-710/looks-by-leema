@@ -331,28 +331,54 @@ export const SERVICE_SHOWCASES = {
     slug: 'lashes',
     tag: 'Lashes',
     title: 'Lashes',
-    eyebrow: 'Lash Artistry',
+    eyebrow: 'Luxury Lash Studio',
     description:
-      'Custom lash sets designed for natural volume or full glam — lightweight application, beautiful fluff, and a look that opens the eyes effortlessly.',
-    heroImages: [img('lashes', 'hero-1.png'), img('lashes', 'hero-2.png')],
-    gallery: [
-      img('lashes', 'gallery-1.png'),
-      img('lashes', 'gallery-2.png'),
-      img('lashes', 'gallery-3.png'),
-      img('lashes', 'gallery-4.png'),
-    ],
-    sections: [
+      'Wake up glamorous — classic, hybrid, and volume sets customized for your eyes with a soft, feminine, high-end finish.',
+    heroImages: [img('lashes', 'hero.png')],
+    gallery: [],
+    lashServices: [
       {
-        title: 'Custom beauty for your eyes',
-        text: 'From soft hybrid sets to fuller glam, each lash design is mapped to your eye shape for a flattering, balanced, and wearable finish.',
-        image: img('lashes', 'gallery-1.png'),
+        id: 'volume',
+        label: 'Signature Set',
+        title: 'Luxury Volume Lashes',
+        image: img('lashes', 'volume.png'),
+        description:
+          'Create a bold and glamorous look with beautifully layered volume lashes designed for a fuller, dramatic effect.',
       },
       {
-        title: 'Wake up ready',
-        text: 'Wake up looking polished — lashes that enhance your natural beauty so everyday makeup feels effortless and special occasions feel complete.',
-        image: img('lashes', 'gallery-2.png'),
+        id: 'classic',
+        label: 'Timeless Soft Glam',
+        title: 'Classic Lash Elegance',
+        image: img('lashes', 'classic.png'),
+        description:
+          'Enhance your natural beauty with timeless classic lashes that add length, definition, and a soft natural glamour to your eyes.',
+      },
+      {
+        id: 'hybrid',
+        label: 'Balanced Texture',
+        title: 'Perfect Hybrid Blend',
+        image: img('lashes', 'hybrid.png'),
+        description:
+          'A beautiful combination of classic and volume techniques for a balanced, textured, and effortlessly stunning lash look.',
+      },
+      {
+        id: 'lash-lift',
+        label: 'Natural Enhancement',
+        title: 'Natural Lash Lift',
+        image: img('lashes', 'lash-lift.png'),
+        description:
+          'Lift and enhance your natural lashes with a beautiful curl that creates a brighter, more open eye appearance.',
+      },
+      {
+        id: 'extensions',
+        label: 'Custom Glam',
+        title: 'Premium Lash Extensions',
+        image: img('lashes', 'extensions.png'),
+        description:
+          'Achieve a flawless eye transformation with customized lash extensions designed to match your preferred style.',
       },
     ],
+    sections: [],
   },
 };
 
