@@ -25,8 +25,7 @@ export const defaultSiteSettings = {
   about: {
     lead: "At LooksByLeema Beauty Studio, beauty is more than a service — it's an experience.",
     body: 'Located in Queens, NY, we specialize in soft glam makeup, flawless skin treatments, precision waxing, elegant hair services, nail care, and lashes. Every appointment is tailored to enhance your natural beauty while you relax in a warm, welcoming space.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1560066984-138d7434da31?w=800&q=80',
+    imageUrl: '/images/about-studio.png',
     founderName: 'Haleema',
     founderBio:
       'Haleema founded LooksByLeema Beauty Studio with a simple vision: create a space where every woman feels seen, celebrated, and beautiful in her own skin. With years of experience in makeup artistry, skincare, and beauty services, she brings passion, precision, and a personal touch to every client.',

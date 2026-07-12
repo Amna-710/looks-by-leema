@@ -11,6 +11,7 @@ import ServicesPage from './pages/Services';
 import PoliciesPage from './pages/Policies';
 import BookingPage from './pages/Booking';
 import ContactPage from './pages/Contact';
+import ServiceShowcasePage from './pages/ServiceShowcase';
 import AdminLogin from './admin/pages/AdminLogin';
 import AdminDashboard from './admin/pages/AdminDashboard';
 import './admin/Admin.css';
@@ -34,6 +35,12 @@ export default function App() {
               <Route path="policies" element={<PoliciesPage />} />
               <Route path="booking" element={<BookingPage />} />
               <Route path="contact" element={<ContactPage />} />
+              <Route path="soft-glam" element={<ServiceShowcasePage />} />
+              <Route path="facials" element={<ServiceShowcasePage />} />
+              <Route path="waxing" element={<ServiceShowcasePage />} />
+              <Route path="hair" element={<ServiceShowcasePage />} />
+              <Route path="nails" element={<ServiceShowcasePage />} />
+              <Route path="lashes" element={<ServiceShowcasePage />} />
             </Route>
 
             <Route path="/admin/login" element={<AdminLogin />} />
