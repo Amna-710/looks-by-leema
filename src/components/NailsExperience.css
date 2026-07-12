@@ -1,0 +1,223 @@
+.nails-exp {
+  background: var(--bg-primary);
+}
+
+.nails-intro__inner {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.nails-intro__eyebrow {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--rose-gold);
+  margin-bottom: 0.65rem;
+}
+
+.nails-intro__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.85rem, 4vw, 2.6rem);
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.85rem;
+}
+
+.nails-intro__text {
+  color: var(--text-secondary);
+  font-size: 0.98rem;
+  line-height: 1.8;
+}
+
+.nails-services__list {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+}
+
+.nails-service {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.nails-service--reverse {
+  direction: rtl;
+}
+
+.nails-service--reverse > * {
+  direction: ltr;
+}
+
+.nails-service__media {
+  position: relative;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  aspect-ratio: 5 / 4;
+  box-shadow: 0 16px 48px rgba(20, 12, 16, 0.14);
+  background: var(--card-bg);
+}
+
+.nails-service__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.7s ease;
+}
+
+.nails-service:hover .nails-service__media img {
+  transform: scale(1.05);
+}
+
+.nails-service__index {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  color: var(--white);
+  background: rgba(20, 12, 16, 0.45);
+  backdrop-filter: blur(6px);
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-full);
+}
+
+.nails-service__content {
+  padding: 0.5rem 0.25rem;
+}
+
+.nails-service__label {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rose-gold);
+  margin-bottom: 0.55rem;
+}
+
+.nails-service__name {
+  font-family: var(--font-display);
+  font-size: clamp(1.55rem, 3vw, 2.1rem);
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.85rem;
+}
+
+.nails-service__desc {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  margin-bottom: 1.15rem;
+}
+
+.nails-service__benefits {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.nails-service__benefits li {
+  position: relative;
+  padding-left: 1.15rem;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.nails-service__benefits li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--rose-gold), #9a5560);
+}
+
+.nails-mosaic__header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.nails-mosaic__grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  grid-template-rows: 240px 240px;
+  gap: 1rem;
+}
+
+.nails-mosaic__item {
+  border-radius: 1.1rem;
+  overflow: hidden;
+  box-shadow: 0 10px 32px var(--shadow-color);
+}
+
+.nails-mosaic__item--1 {
+  grid-row: span 2;
+}
+
+.nails-mosaic__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.55s ease;
+}
+
+.nails-mosaic__item:hover img {
+  transform: scale(1.04);
+}
+
+@media (max-width: 900px) {
+  .nails-service,
+  .nails-service--reverse {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    direction: ltr;
+  }
+
+  .nails-services__list {
+    gap: 2.75rem;
+  }
+
+  .nails-mosaic__grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 220px 180px;
+  }
+
+  .nails-mosaic__item--1 {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .nails-service__media {
+    aspect-ratio: 4 / 3;
+  }
+
+  .nails-mosaic__grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+  }
+
+  .nails-mosaic__item,
+  .nails-mosaic__item--1 {
+    grid-column: span 1;
+    aspect-ratio: 4 / 3;
+  }
+}

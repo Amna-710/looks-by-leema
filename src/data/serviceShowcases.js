@@ -162,28 +162,70 @@ export const SERVICE_SHOWCASES = {
     slug: 'nails',
     tag: 'Nails',
     title: 'Nails',
-    eyebrow: 'Nail Care',
+    eyebrow: 'Luxury Nail Studio',
     description:
-      'Refined nail care and beautiful finishes — clean technique, thoughtful styling, and a polished look that completes your beauty experience.',
-    heroImages: [img('nails', 'hero-1.png'), img('nails', 'hero-2.png')],
+      'Elegant gels, custom acrylics, and artistic nail designs — polished to perfection for a look that feels refined, glamorous, and uniquely you.',
+    heroImages: [img('nails', 'hero.png')],
     gallery: [
       img('nails', 'gallery-1.png'),
       img('nails', 'gallery-2.png'),
-      img('nails', 'gallery-3.png'),
-      img('nails', 'gallery-4.png'),
+      img('nails', 'nail-art.png'),
     ],
-    sections: [
+    nailServices: [
       {
-        title: 'Polished perfection',
-        text: 'Every nail service is approached with precision and artistry — clean prep, elegant color, and a finish that feels intentional and luxurious.',
-        image: img('nails', 'gallery-1.png'),
+        id: 'gel',
+        label: 'Signature Finish',
+        name: 'Gel Nails',
+        image: img('nails', 'gel.png'),
+        description:
+          'A glossy, salon-perfect finish that holds its shine — ideal when you want polished color with lasting beauty and a soft glam feel.',
+        benefits: [
+          'Long-lasting shine that stays fresh',
+          'Durable, glossy finish',
+          'Smooth color with a refined look',
+        ],
       },
       {
-        title: 'The finishing touch',
-        text: 'Whether classic or statement, your nails should feel like an extension of your personal style. We help you find the look that feels most you.',
-        image: img('nails', 'gallery-2.png'),
+        id: 'acrylic',
+        label: 'Sculpted Style',
+        name: 'Acrylic Nails',
+        image: img('nails', 'acrylic.png'),
+        description:
+          'Strong, stylish extensions shaped to your preference — from classic length to bold statement sets with customizable designs.',
+        benefits: [
+          'Strong and stylish structure',
+          'Customizable shapes and lengths',
+          'Perfect base for creative designs',
+        ],
+      },
+      {
+        id: 'nail-art',
+        label: 'Creative Detail',
+        name: 'Nail Art',
+        image: img('nails', 'nail-art.png'),
+        description:
+          'Personalized artistry for every mood — florals, chrome, gems, and modern motifs crafted for an Instagram-worthy finish.',
+        benefits: [
+          'Creative, personalized designs',
+          'Trend-inspired details and accents',
+          'Unique looks for every occasion',
+        ],
+      },
+      {
+        id: 'manicure',
+        label: 'Essential Care',
+        name: 'Manicure Services',
+        image: img('nails', 'manicure.png'),
+        description:
+          'Clean, healthy, and beautifully polished nails with careful prep and finishing touches that keep your hands looking elegant.',
+        benefits: [
+          'Clean and healthy nail care',
+          'Polished, refined finish',
+          'Soft hands with a luxury touch',
+        ],
       },
     ],
+    sections: [],
   },
   lashes: {
     slug: 'lashes',

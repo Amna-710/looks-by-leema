@@ -6,6 +6,7 @@ import { Autoplay, EffectFade, Pagination } from 'swiper/modules';
 import { getServiceShowcase } from '../data/serviceShowcases';
 import SoftGlamHeroBackground from '../components/SoftGlamHeroBackground';
 import FacialTreatments from '../components/FacialTreatments';
+import NailsExperience from '../components/NailsExperience';
 import { fadeInUp } from '../utils/animations';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
@@ -29,6 +30,7 @@ export default function ServiceShowcasePage() {
   const [lightboxIndex, setLightboxIndex] = useState(null);
   const isSoftGlam = slug === 'soft-glam';
   const isFacials = slug === 'facials';
+  const isNails = slug === 'nails';
 
   // Soft Glam gallery: mixed random order once per page load
   const [galleryImages] = useState(() => {
@@ -65,10 +67,10 @@ export default function ServiceShowcasePage() {
   return (
     <div className="svc-page">
       {/* Hero slideshow */}
-      <section className={`svc-hero${isSoftGlam ? ' svc-hero--soft-glam' : ''}${isFacials ? ' svc-hero--facials' : ''}`}>
+      <section className={`svc-hero${isSoftGlam ? ' svc-hero--soft-glam' : ''}${(isFacials || isNails) ? ' svc-hero--facials' : ''}`}>
         {isSoftGlam ? (
           <SoftGlamHeroBackground images={service.heroImages} />
-        ) : isFacials ? (
+        ) : isFacials || isNails ? (
           <div className="svc-hero__bg-static" aria-hidden="true">
             <img
               src={service.heroImages[0]}
@@ -141,9 +143,11 @@ export default function ServiceShowcasePage() {
         </div>
       </section>
 
-      {/* Below hero: Facial treatments OR shared gallery + features */}
+      {/* Below hero: page-specific layouts OR shared gallery + features */}
       {isFacials ? (
         <FacialTreatments treatments={service.treatments} />
+      ) : isNails ? (
+        <NailsExperience services={service.nailServices} gallery={service.gallery} />
       ) : (
         <>
           <section className="svc-gallery section">
@@ -191,7 +195,7 @@ export default function ServiceShowcasePage() {
             </div>
           </section>
 
-          {service.sections.map((section, index) => (
+          {(service.sections || []).map((section, index) => (
             <section
               key={section.title}
               className={`svc-feature section ${index % 2 === 1 ? 'svc-feature--alt' : ''}`}
