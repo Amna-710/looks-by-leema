@@ -108,28 +108,66 @@ export const SERVICE_SHOWCASES = {
     slug: 'waxing',
     tag: 'Waxing',
     title: 'Waxing',
-    eyebrow: 'Smooth Skin Care',
+    eyebrow: 'Luxury Smooth Skin',
     description:
-      'Precise, professional waxing for silky-smooth results — comfortable technique, clean application, and lasting finish in a private, welcoming space.',
-    heroImages: [img('waxing', 'hero-1.png'), img('waxing', 'hero-2.png')],
-    gallery: [
-      img('waxing', 'gallery-1.png'),
-      img('waxing', 'gallery-2.png'),
-      img('waxing', 'gallery-3.png'),
-      img('waxing', 'gallery-4.png'),
-    ],
-    sections: [
+      'Gentle, precise waxing in a calm private studio — silky-smooth results with a clean, polished finish that feels fresh and refined.',
+    heroImages: [img('waxing', 'hero.png')],
+    gallery: [],
+    waxServices: [
       {
-        title: 'Precision & care',
-        text: 'We prioritize comfort and cleanliness with careful preparation, quality wax, and a technique refined for smooth, long-lasting results.',
-        image: img('waxing', 'gallery-1.png'),
+        id: 'face',
+        label: 'Facial Softness',
+        name: 'Face Wax',
+        image: img('waxing', 'face.png'),
+        description:
+          'Achieve smooth, radiant skin with our gentle face waxing service. Designed to remove unwanted facial hair while leaving your skin soft, refreshed, and beautifully polished.',
+        benefits: [
+          'Smooth and flawless skin',
+          'Removes unwanted facial hair',
+          'Gives a clean, fresh appearance',
+        ],
       },
       {
-        title: 'Confidence, refined',
-        text: 'Whether you are preparing for an event or maintaining your routine, our waxing services deliver a polished finish with a gentle, professional touch.',
-        image: img('waxing', 'gallery-2.png'),
+        id: 'eyebrow',
+        label: 'Brow Definition',
+        name: 'Eyebrow Wax',
+        image: img('waxing', 'eyebrow.png'),
+        description:
+          'Perfectly shaped brows that enhance your natural beauty. Our eyebrow waxing service creates a clean, defined look with a precise and elegant finish.',
+        benefits: [
+          'Defines facial features',
+          'Creates a polished eyebrow shape',
+          'Long-lasting smooth results',
+        ],
+      },
+      {
+        id: 'legs',
+        label: 'Silky Finish',
+        name: 'Legs Wax',
+        image: img('waxing', 'legs.png'),
+        description:
+          'Enjoy silky-smooth legs with our professional waxing treatment. Experience soft, hair-free skin with a luxurious salon finish.',
+        benefits: [
+          'Smooth and soft skin',
+          'Longer-lasting results',
+          'Removes unwanted hair effectively',
+        ],
+      },
+      {
+        id: 'arms',
+        label: 'Confident Softness',
+        name: 'Arms Wax',
+        image: img('waxing', 'arms.png'),
+        description:
+          'Get beautifully smooth and confident-looking arms with our gentle waxing treatment. Designed for a clean, flawless, and comfortable experience.',
+        benefits: [
+          'Soft and smooth skin',
+          'Removes unwanted hair',
+          'Leaves skin feeling refreshed',
+        ],
       },
     ],
+    sections: [],
   },
   hair: {
     slug: 'hair',

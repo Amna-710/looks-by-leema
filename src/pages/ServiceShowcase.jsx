@@ -7,6 +7,7 @@ import { getServiceShowcase } from '../data/serviceShowcases';
 import SoftGlamHeroBackground from '../components/SoftGlamHeroBackground';
 import FacialTreatments from '../components/FacialTreatments';
 import NailsExperience from '../components/NailsExperience';
+import WaxingExperience from '../components/WaxingExperience';
 import { fadeInUp } from '../utils/animations';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
@@ -31,6 +32,7 @@ export default function ServiceShowcasePage() {
   const isSoftGlam = slug === 'soft-glam';
   const isFacials = slug === 'facials';
   const isNails = slug === 'nails';
+  const isWaxing = slug === 'waxing';
 
   // Soft Glam gallery: mixed random order once per page load
   const [galleryImages] = useState(() => {
@@ -67,10 +69,10 @@ export default function ServiceShowcasePage() {
   return (
     <div className="svc-page">
       {/* Hero slideshow */}
-      <section className={`svc-hero${isSoftGlam ? ' svc-hero--soft-glam' : ''}${(isFacials || isNails) ? ' svc-hero--facials' : ''}`}>
+      <section className={`svc-hero${isSoftGlam ? ' svc-hero--soft-glam' : ''}${(isFacials || isNails || isWaxing) ? ' svc-hero--facials' : ''}`}>
         {isSoftGlam ? (
           <SoftGlamHeroBackground images={service.heroImages} />
-        ) : isFacials || isNails ? (
+        ) : isFacials || isNails || isWaxing ? (
           <div className="svc-hero__bg-static" aria-hidden="true">
             <img
               src={service.heroImages[0]}
@@ -148,6 +150,8 @@ export default function ServiceShowcasePage() {
         <FacialTreatments treatments={service.treatments} />
       ) : isNails ? (
         <NailsExperience services={service.nailServices} gallery={service.gallery} />
+      ) : isWaxing ? (
+        <WaxingExperience services={service.waxServices} />
       ) : (
         <>
           <section className="svc-gallery section">

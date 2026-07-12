@@ -1,0 +1,167 @@
+.wax-exp {
+  background: var(--bg-primary);
+}
+
+.wax-intro__inner {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.wax-intro__eyebrow {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--rose-gold);
+  margin-bottom: 0.65rem;
+}
+
+.wax-intro__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.85rem, 4vw, 2.6rem);
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.85rem;
+}
+
+.wax-intro__text {
+  color: var(--text-secondary);
+  font-size: 0.98rem;
+  line-height: 1.8;
+}
+
+.wax-services__list {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+}
+
+.wax-service {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.wax-service--reverse {
+  direction: rtl;
+}
+
+.wax-service--reverse > * {
+  direction: ltr;
+}
+
+.wax-service__media {
+  position: relative;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  aspect-ratio: 5 / 4;
+  box-shadow: 0 16px 48px rgba(20, 12, 16, 0.12);
+  background: var(--card-bg);
+}
+
+.wax-service__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.7s ease;
+}
+
+.wax-service:hover .wax-service__media img {
+  transform: scale(1.05);
+}
+
+.wax-service__index {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  color: var(--white);
+  background: rgba(183, 110, 121, 0.55);
+  backdrop-filter: blur(6px);
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-full);
+}
+
+.wax-service__content {
+  padding: 0.5rem 0.25rem;
+}
+
+.wax-service__label {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rose-gold);
+  margin-bottom: 0.55rem;
+}
+
+.wax-service__name {
+  font-family: var(--font-display);
+  font-size: clamp(1.55rem, 3vw, 2.1rem);
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.85rem;
+}
+
+.wax-service__desc {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  margin-bottom: 1.15rem;
+}
+
+.wax-service__benefits {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.wax-service__benefits li {
+  position: relative;
+  padding-left: 1.15rem;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.wax-service__benefits li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--rose-gold), #9a5560);
+}
+
+@media (max-width: 900px) {
+  .wax-service,
+  .wax-service--reverse {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    direction: ltr;
+  }
+
+  .wax-services__list {
+    gap: 2.75rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .wax-service__media {
+    aspect-ratio: 4 / 3;
+  }
+}
