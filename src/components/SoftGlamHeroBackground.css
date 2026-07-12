@@ -6,14 +6,18 @@
   z-index: 0;
   overflow: hidden;
   background: #1a1214;
+  pointer-events: none;
 }
 
 .soft-glam-bg__layer {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
   opacity: 0;
   transition: opacity 1.1s ease-in-out;
   will-change: opacity;
+  overflow: hidden;
 }
 
 .soft-glam-bg__layer--active {
@@ -22,10 +26,12 @@
 }
 
 .soft-glam-bg__layer img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
+  max-width: none;
   object-fit: cover;
-  object-position: center top;
+  object-position: center;
   display: block;
-  transform: scale(1.02);
 }

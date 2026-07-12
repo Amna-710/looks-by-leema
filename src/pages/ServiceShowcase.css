@@ -8,6 +8,14 @@
   background: #1a1214;
 }
 
+/* Soft Glam — fixed hero height so background images cover consistently */
+.svc-hero--soft-glam {
+  height: 72vh;
+  height: 72dvh;
+  min-height: 520px;
+  max-height: 900px;
+}
+
 .svc-hero__swiper {
   position: absolute;
   inset: 0;
@@ -149,6 +157,44 @@
 .svc-gallery__item--3,
 .svc-gallery__item--4 {
   grid-column: span 1;
+  grid-row: span 1;
+}
+
+.svc-gallery__item--5 {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+
+.svc-gallery__item--6 {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+
+/* Soft Glam — balanced 6-image premium layout */
+.svc-gallery__grid--soft-glam {
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-rows: 200px;
+}
+
+.svc-gallery__grid--soft-glam .svc-gallery__item--1 {
+  grid-column: span 3;
+  grid-row: span 2;
+}
+
+.svc-gallery__grid--soft-glam .svc-gallery__item--2 {
+  grid-column: span 3;
+  grid-row: span 1;
+}
+
+.svc-gallery__grid--soft-glam .svc-gallery__item--3,
+.svc-gallery__grid--soft-glam .svc-gallery__item--4 {
+  grid-column: span 3;
+  grid-row: span 1;
+}
+
+.svc-gallery__grid--soft-glam .svc-gallery__item--5,
+.svc-gallery__grid--soft-glam .svc-gallery__item--6 {
+  grid-column: span 3;
   grid-row: span 1;
 }
 
@@ -356,9 +402,36 @@
 }
 
 @media (max-width: 900px) {
+  .svc-hero--soft-glam {
+    height: 68vh;
+    height: 68dvh;
+    min-height: 460px;
+    max-height: 780px;
+  }
+
   .svc-gallery__grid {
     grid-template-columns: repeat(2, 1fr);
     grid-auto-rows: 160px;
+  }
+
+  .svc-gallery__grid--soft-glam {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 180px;
+  }
+
+  .svc-gallery__grid--soft-glam .svc-gallery__item--1,
+  .svc-gallery__grid--soft-glam .svc-gallery__item--2,
+  .svc-gallery__grid--soft-glam .svc-gallery__item--3,
+  .svc-gallery__grid--soft-glam .svc-gallery__item--4,
+  .svc-gallery__grid--soft-glam .svc-gallery__item--5,
+  .svc-gallery__grid--soft-glam .svc-gallery__item--6 {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+
+  .svc-gallery__grid--soft-glam .svc-gallery__item--1 {
+    grid-column: span 2;
+    grid-row: span 2;
   }
 
   .svc-gallery__item--1 {
@@ -386,6 +459,13 @@
     min-height: 64vh;
   }
 
+  .svc-hero--soft-glam {
+    height: 64vh;
+    height: 64dvh;
+    min-height: 420px;
+    max-height: none;
+  }
+
   .svc-hero__slide {
     min-height: 64vh;
   }
@@ -397,6 +477,21 @@
   .svc-gallery__grid {
     grid-template-columns: 1fr;
     grid-auto-rows: 220px;
+  }
+
+  .svc-gallery__grid--soft-glam {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 240px;
+  }
+
+  .svc-gallery__grid--soft-glam .svc-gallery__item--1,
+  .svc-gallery__grid--soft-glam .svc-gallery__item--2,
+  .svc-gallery__grid--soft-glam .svc-gallery__item--3,
+  .svc-gallery__grid--soft-glam .svc-gallery__item--4,
+  .svc-gallery__grid--soft-glam .svc-gallery__item--5,
+  .svc-gallery__grid--soft-glam .svc-gallery__item--6 {
+    grid-column: span 1;
+    grid-row: span 1;
   }
 
   .svc-gallery__item--1,

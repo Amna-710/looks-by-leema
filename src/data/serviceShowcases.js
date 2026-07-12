@@ -23,6 +23,8 @@ export const SERVICE_SHOWCASES = {
       img('soft-glam', 'gallery-2.png'),
       img('soft-glam', 'gallery-3.png'),
       img('soft-glam', 'gallery-4.png'),
+      img('soft-glam', 'gallery-5.png'),
+      img('soft-glam', 'gallery-6.png'),
     ],
     sections: [
       {

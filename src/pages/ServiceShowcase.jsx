@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation, Navigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -11,6 +11,15 @@ import 'swiper/css/effect-fade';
 import 'swiper/css/pagination';
 import './ServiceShowcase.css';
 
+function shuffleImages(list) {
+  const next = [...list];
+  for (let i = next.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [next[i], next[j]] = [next[j], next[i]];
+  }
+  return next;
+}
+
 /** Luxury service gallery page — hero slider, masonry gallery, lightbox */
 export default function ServiceShowcasePage() {
   const { pathname } = useLocation();
@@ -19,17 +28,24 @@ export default function ServiceShowcasePage() {
   const [lightboxIndex, setLightboxIndex] = useState(null);
   const isSoftGlam = slug === 'soft-glam';
 
-  const closeLightbox = useCallback(() => setLightboxIndex(null), []);
+  // Soft Glam gallery: mixed random order once per page load
+  const [galleryImages] = useState(() => {
+    const data = getServiceShowcase(slug);
+    if (!data?.gallery) return [];
+    return slug === 'soft-glam' ? shuffleImages(data.gallery) : data.gallery;
+  });
+
+  const closeLightbox = () => setLightboxIndex(null);
 
   useEffect(() => {
     if (lightboxIndex === null) return undefined;
     const onKey = (e) => {
       if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowRight' && service) {
-        setLightboxIndex((i) => (i + 1) % service.gallery.length);
+      if (e.key === 'ArrowRight' && galleryImages.length) {
+        setLightboxIndex((i) => (i + 1) % galleryImages.length);
       }
-      if (e.key === 'ArrowLeft' && service) {
-        setLightboxIndex((i) => (i - 1 + service.gallery.length) % service.gallery.length);
+      if (e.key === 'ArrowLeft' && galleryImages.length) {
+        setLightboxIndex((i) => (i - 1 + galleryImages.length) % galleryImages.length);
       }
     };
     document.body.style.overflow = 'hidden';
@@ -38,7 +54,7 @@ export default function ServiceShowcasePage() {
       document.body.style.overflow = '';
       window.removeEventListener('keydown', onKey);
     };
-  }, [lightboxIndex, service, closeLightbox]);
+  }, [lightboxIndex, galleryImages]);
 
   if (!service) {
     return <Navigate to="/about" replace />;
@@ -47,7 +63,7 @@ export default function ServiceShowcasePage() {
   return (
     <div className="svc-page">
       {/* Hero slideshow */}
-      <section className="svc-hero">
+      <section className={`svc-hero${isSoftGlam ? ' svc-hero--soft-glam' : ''}`}>
         {isSoftGlam ? (
           <SoftGlamHeroBackground images={service.heroImages} />
         ) : (
@@ -131,12 +147,12 @@ export default function ServiceShowcasePage() {
             </p>
           </motion.div>
 
-          <div className="svc-gallery__grid">
-            {service.gallery.map((src, index) => (
+          <div className={`svc-gallery__grid${isSoftGlam ? ' svc-gallery__grid--soft-glam' : ''}`}>
+            {galleryImages.map((src, index) => (
               <motion.button
                 type="button"
                 key={`${src}-${index}`}
-                className={`svc-gallery__item svc-gallery__item--${(index % 4) + 1}`}
+                className={`svc-gallery__item svc-gallery__item--${(index % 6) + 1}`}
                 onClick={() => setLightboxIndex(index)}
                 initial="hidden"
                 whileInView="visible"
@@ -145,7 +161,12 @@ export default function ServiceShowcasePage() {
                 transition={{ delay: (index % 4) * 0.08 }}
                 aria-label={`Open ${service.title} gallery image ${index + 1}`}
               >
-                <img src={src} alt={`${service.title} gallery ${index + 1}`} loading="lazy" />
+                <img
+                  src={src}
+                  alt={`${service.title} gallery ${index + 1}`}
+                  loading="lazy"
+                  style={{ objectFit: 'cover', objectPosition: 'center', width: '100%', height: '100%' }}
+                />
                 <span className="svc-gallery__zoom" aria-hidden="true">
                   View
                 </span>
@@ -236,15 +257,15 @@ export default function ServiceShowcasePage() {
               className="svc-lightbox__nav svc-lightbox__nav--prev"
               onClick={(e) => {
                 e.stopPropagation();
-                setLightboxIndex((i) => (i - 1 + service.gallery.length) % service.gallery.length);
+                setLightboxIndex((i) => (i - 1 + galleryImages.length) % galleryImages.length);
               }}
               aria-label="Previous image"
             >
               ‹
             </button>
             <motion.img
-              key={service.gallery[lightboxIndex]}
-              src={service.gallery[lightboxIndex]}
+              key={galleryImages[lightboxIndex]}
+              src={galleryImages[lightboxIndex]}
               alt={`${service.title} ${lightboxIndex + 1}`}
               className="svc-lightbox__img"
               initial={{ opacity: 0, scale: 0.96 }}
@@ -258,14 +279,14 @@ export default function ServiceShowcasePage() {
               className="svc-lightbox__nav svc-lightbox__nav--next"
               onClick={(e) => {
                 e.stopPropagation();
-                setLightboxIndex((i) => (i + 1) % service.gallery.length);
+                setLightboxIndex((i) => (i + 1) % galleryImages.length);
               }}
               aria-label="Next image"
             >
               ›
             </button>
             <p className="svc-lightbox__counter">
-              {lightboxIndex + 1} / {service.gallery.length}
+              {lightboxIndex + 1} / {galleryImages.length}
             </p>
           </motion.div>
         )}
