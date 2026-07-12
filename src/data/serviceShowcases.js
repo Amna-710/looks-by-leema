@@ -176,7 +176,11 @@ export const SERVICE_SHOWCASES = {
     eyebrow: 'Hair Styling',
     description:
       'Elegant hair services crafted to complement your look — from polished styling to glamorous finishing touches that feel luxurious and wearable.',
-    heroImages: [img('hair', 'hero-1.png'), img('hair', 'hero-2.png')],
+    heroImages: [
+      img('hair', 'hero-1.png'),
+      img('hair', 'hero-2.png'),
+      img('hair', 'hero-3.png'),
+    ],
     gallery: [],
     hairServices: [
       {
