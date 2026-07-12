@@ -69,7 +69,7 @@ export default function ServiceShowcasePage() {
   return (
     <div className="svc-page">
       {/* Hero slideshow */}
-      <section className={`svc-hero${isSoftGlam ? ' svc-hero--soft-glam' : ''}${(isFacials || isNails || isWaxing) ? ' svc-hero--facials' : ''}`}>
+      <section className={`svc-hero${isSoftGlam ? ' svc-hero--soft-glam' : ''}${(isFacials || isNails || isWaxing) ? ' svc-hero--facials' : ''}${isWaxing ? ' svc-hero--waxing' : ''}`}>
         {isSoftGlam ? (
           <SoftGlamHeroBackground images={service.heroImages} />
         ) : isFacials || isNails || isWaxing ? (

@@ -45,6 +45,17 @@
   display: block;
 }
 
+/* Waxing hero — keep the treatment action visible when cropping */
+.svc-hero--waxing .svc-hero__bg-static img {
+  object-position: center right;
+}
+
+@media (max-width: 768px) {
+  .svc-hero--waxing .svc-hero__bg-static img {
+    object-position: 70% center;
+  }
+}
+
 .svc-hero__swiper {
   position: absolute;
   inset: 0;
