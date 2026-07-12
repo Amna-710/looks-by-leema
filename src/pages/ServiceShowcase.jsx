@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade, Pagination } from 'swiper/modules';
 import { getServiceShowcase } from '../data/serviceShowcases';
 import SoftGlamHeroBackground from '../components/SoftGlamHeroBackground';
+import FacialTreatments from '../components/FacialTreatments';
 import { fadeInUp } from '../utils/animations';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
@@ -27,6 +28,7 @@ export default function ServiceShowcasePage() {
   const service = getServiceShowcase(slug);
   const [lightboxIndex, setLightboxIndex] = useState(null);
   const isSoftGlam = slug === 'soft-glam';
+  const isFacials = slug === 'facials';
 
   // Soft Glam gallery: mixed random order once per page load
   const [galleryImages] = useState(() => {
@@ -63,9 +65,18 @@ export default function ServiceShowcasePage() {
   return (
     <div className="svc-page">
       {/* Hero slideshow */}
-      <section className={`svc-hero${isSoftGlam ? ' svc-hero--soft-glam' : ''}`}>
+      <section className={`svc-hero${isSoftGlam ? ' svc-hero--soft-glam' : ''}${isFacials ? ' svc-hero--facials' : ''}`}>
         {isSoftGlam ? (
           <SoftGlamHeroBackground images={service.heroImages} />
+        ) : isFacials ? (
+          <div className="svc-hero__bg-static" aria-hidden="true">
+            <img
+              src={service.heroImages[0]}
+              alt=""
+              loading="eager"
+              decoding="async"
+            />
+          </div>
         ) : (
           <Swiper
             modules={[Autoplay, EffectFade, Pagination]}
@@ -130,87 +141,92 @@ export default function ServiceShowcasePage() {
         </div>
       </section>
 
-      {/* Gallery */}
-      <section className="svc-gallery section">
-        <div className="container">
-          <motion.div
-            className="svc-gallery__header"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-40px' }}
-            variants={fadeInUp}
-          >
-            <span className="svc-gallery__eyebrow">Gallery</span>
-            <h2 className="svc-gallery__title">{service.title} Moments</h2>
-            <p className="svc-gallery__subtitle">
-              Explore looks and details from our {service.title.toLowerCase()} services.
-            </p>
-          </motion.div>
-
-          <div className={`svc-gallery__grid${isSoftGlam ? ' svc-gallery__grid--soft-glam' : ''}`}>
-            {galleryImages.map((src, index) => (
-              <motion.button
-                type="button"
-                key={`${src}-${index}`}
-                className={`svc-gallery__item svc-gallery__item--${(index % 6) + 1}`}
-                onClick={() => setLightboxIndex(index)}
+      {/* Below hero: Facial treatments OR shared gallery + features */}
+      {isFacials ? (
+        <FacialTreatments treatments={service.treatments} />
+      ) : (
+        <>
+          <section className="svc-gallery section">
+            <div className="container">
+              <motion.div
+                className="svc-gallery__header"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: '-40px' }}
                 variants={fadeInUp}
-                transition={{ delay: (index % 4) * 0.08 }}
-                aria-label={`Open ${service.title} gallery image ${index + 1}`}
               >
-                <img
-                  src={src}
-                  alt={`${service.title} gallery ${index + 1}`}
-                  loading="lazy"
-                  style={{ objectFit: 'cover', objectPosition: 'center', width: '100%', height: '100%' }}
-                />
-                <span className="svc-gallery__zoom" aria-hidden="true">
-                  View
-                </span>
-              </motion.button>
-            ))}
-          </div>
-        </div>
-      </section>
+                <span className="svc-gallery__eyebrow">Gallery</span>
+                <h2 className="svc-gallery__title">{service.title} Moments</h2>
+                <p className="svc-gallery__subtitle">
+                  Explore looks and details from our {service.title.toLowerCase()} services.
+                </p>
+              </motion.div>
 
-      {/* Feature sections */}
-      {service.sections.map((section, index) => (
-        <section
-          key={section.title}
-          className={`svc-feature section ${index % 2 === 1 ? 'svc-feature--alt' : ''}`}
-        >
-          <div className="container">
-            <div className={`svc-feature__grid ${index % 2 === 1 ? 'svc-feature__grid--reverse' : ''}`}>
-              <motion.div
-                className="svc-feature__image"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: '-60px' }}
-                variants={fadeInUp}
-              >
-                <img src={section.image} alt={section.title} loading="lazy" />
-              </motion.div>
-              <motion.div
-                className="svc-feature__content"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: '-60px' }}
-                variants={fadeInUp}
-                transition={{ delay: 0.12 }}
-              >
-                <h2 className="svc-feature__title">{section.title}</h2>
-                <p className="svc-feature__text">{section.text}</p>
-                <Link to="/booking" className="btn btn--primary btn--sm">
-                  Book Now
-                </Link>
-              </motion.div>
+              <div className={`svc-gallery__grid${isSoftGlam ? ' svc-gallery__grid--soft-glam' : ''}`}>
+                {galleryImages.map((src, index) => (
+                  <motion.button
+                    type="button"
+                    key={`${src}-${index}`}
+                    className={`svc-gallery__item svc-gallery__item--${(index % 6) + 1}`}
+                    onClick={() => setLightboxIndex(index)}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: '-40px' }}
+                    variants={fadeInUp}
+                    transition={{ delay: (index % 4) * 0.08 }}
+                    aria-label={`Open ${service.title} gallery image ${index + 1}`}
+                  >
+                    <img
+                      src={src}
+                      alt={`${service.title} gallery ${index + 1}`}
+                      loading="lazy"
+                      style={{ objectFit: 'cover', objectPosition: 'center', width: '100%', height: '100%' }}
+                    />
+                    <span className="svc-gallery__zoom" aria-hidden="true">
+                      View
+                    </span>
+                  </motion.button>
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
-      ))}
+          </section>
+
+          {service.sections.map((section, index) => (
+            <section
+              key={section.title}
+              className={`svc-feature section ${index % 2 === 1 ? 'svc-feature--alt' : ''}`}
+            >
+              <div className="container">
+                <div className={`svc-feature__grid ${index % 2 === 1 ? 'svc-feature__grid--reverse' : ''}`}>
+                  <motion.div
+                    className="svc-feature__image"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: '-60px' }}
+                    variants={fadeInUp}
+                  >
+                    <img src={section.image} alt={section.title} loading="lazy" />
+                  </motion.div>
+                  <motion.div
+                    className="svc-feature__content"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: '-60px' }}
+                    variants={fadeInUp}
+                    transition={{ delay: 0.12 }}
+                  >
+                    <h2 className="svc-feature__title">{section.title}</h2>
+                    <p className="svc-feature__text">{section.text}</p>
+                    <Link to="/booking" className="btn btn--primary btn--sm">
+                      Book Now
+                    </Link>
+                  </motion.div>
+                </div>
+              </div>
+            </section>
+          ))}
+        </>
+      )}
 
       {/* CTA */}
       <section className="svc-cta section">

@@ -46,12 +46,50 @@ export const SERVICE_SHOWCASES = {
     eyebrow: 'Skincare Rituals',
     description:
       'Rejuvenating facial treatments that restore clarity, hydration, and a healthy glow — tailored to your skin in a calm, private studio setting.',
-    heroImages: [img('facials', 'hero-1.png'), img('facials', 'hero-2.png')],
+    heroImages: [img('facials', 'hero-background.png')],
     gallery: [
       img('facials', 'gallery-1.png'),
       img('facials', 'gallery-2.png'),
       img('facials', 'gallery-3.png'),
       img('facials', 'gallery-4.png'),
+    ],
+    treatments: [
+      {
+        id: 'anti-aging',
+        name: 'Anti-Aging Facial',
+        image: img('facials', 'anti-aging.png'),
+        description:
+          'A restorative ritual designed to soften visible signs of aging and revive the skin\'s natural radiance with gentle, nourishing care.',
+        benefits: [
+          'Reduces the appearance of fine lines',
+          'Improves skin firmness and elasticity',
+          'Restores a youthful, luminous glow',
+        ],
+      },
+      {
+        id: 'hydrating',
+        name: 'Hydrating Facial',
+        image: img('facials', 'hydrating.png'),
+        description:
+          'A deeply moisturizing treatment that replenishes thirsty skin — leaving it soft, balanced, and beautifully refreshed.',
+        benefits: [
+          'Deeply moisturizes dry or dull skin',
+          'Improves softness and smoothness',
+          'Gives a fresh, glowing look',
+        ],
+      },
+      {
+        id: 'acne',
+        name: 'Acne Facial',
+        image: img('facials', 'acne.png'),
+        description:
+          'A clarifying treatment focused on cleaner pores and calmer skin — helping you feel more confident in your complexion.',
+        benefits: [
+          'Helps control breakouts',
+          'Cleans pores and reduces excess oil',
+          'Improves overall skin clarity',
+        ],
+      },
     ],
     sections: [
       {
