@@ -1,10 +1,26 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { fadeInUp } from '../utils/animations';
 import './HairExperience.css';
 
 /** Hairstyle services + lookbook — Hair route only (below hero) */
 export default function HairExperience({ services, lookbook }) {
+  const [preview, setPreview] = useState(null);
+
+  useEffect(() => {
+    if (!preview) return undefined;
+    const onKey = (e) => {
+      if (e.key === 'Escape') setPreview(null);
+    };
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [preview]);
+
   if (!services?.length) return null;
 
   return (
@@ -97,12 +113,22 @@ export default function HairExperience({ services, lookbook }) {
                   transition={{ delay: (index % 3) * 0.08 }}
                 >
                   <div className="hair-lookbook__frame">
-                    <img
-                      src={style.image}
-                      alt={style.title}
-                      loading="lazy"
-                      decoding="async"
-                    />
+                    <button
+                      type="button"
+                      className="hair-lookbook__preview-btn"
+                      onClick={() => setPreview(style)}
+                      aria-label={`Preview ${style.title}`}
+                    >
+                      <img
+                        src={style.image}
+                        alt={style.title}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <span className="hair-lookbook__zoom" aria-hidden="true">
+                        View
+                      </span>
+                    </button>
                     <div className="hair-lookbook__caption">
                       <span className="hair-lookbook__num">
                         {String(index + 1).padStart(2, '0')}
@@ -130,6 +156,49 @@ export default function HairExperience({ services, lookbook }) {
           </div>
         </section>
       )}
+
+      <AnimatePresence>
+        {preview && (
+          <motion.div
+            className="hair-lookbook-lightbox"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={() => setPreview(null)}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${preview.title} preview`}
+          >
+            <button
+              type="button"
+              className="hair-lookbook-lightbox__close"
+              onClick={() => setPreview(null)}
+              aria-label="Close preview"
+            >
+              ×
+            </button>
+            <motion.div
+              className="hair-lookbook-lightbox__panel"
+              initial={{ opacity: 0, scale: 0.94 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.28, ease: 'easeOut' }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={preview.image}
+                alt={preview.title}
+                className="hair-lookbook-lightbox__img"
+              />
+              <div className="hair-lookbook-lightbox__meta">
+                <h3>{preview.title}</h3>
+                <p>{preview.description}</p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
