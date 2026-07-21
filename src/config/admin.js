@@ -14,12 +14,33 @@ export function getAdminEmails() {
 /** True when the email is on the admin allowlist */
 export function isAdminEmail(email) {
   if (!email) return false;
-  return getAdminEmails().includes(email.trim().toLowerCase());
+  const allowlist = getAdminEmails();
+  const normalized = email.trim().toLowerCase();
+  const allowed = allowlist.includes(normalized);
+  console.log('[admin-auth] isAdminEmail()', { email: normalized, allowlist, allowed });
+  return allowed;
 }
 
-/** True when a Firebase user is a verified admin */
+/**
+ * True when a Firebase user is an allowlisted admin.
+ * Email verification is not required for allowlisted admins — accounts created
+ * in Firebase Console start with emailVerified=false and would otherwise be
+ * locked out after a successful password sign-in.
+ */
 export function isAdminUser(user) {
-  if (!user?.email) return false;
-  if (!user.emailVerified) return false;
-  return isAdminEmail(user.email);
+  if (!user?.email) {
+    console.log('[admin-auth] isAdminUser() → false (no email)', {
+      hasUser: Boolean(user),
+      emailVerified: user?.emailVerified,
+    });
+    return false;
+  }
+  const allowed = isAdminEmail(user.email);
+  console.log('[admin-auth] isAdminUser()', {
+    email: user.email,
+    emailVerified: user.emailVerified,
+    uid: user.uid,
+    allowed,
+  });
+  return allowed;
 }

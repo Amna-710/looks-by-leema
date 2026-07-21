@@ -96,7 +96,11 @@ export default function Booking() {
     setSubmitError('');
 
     try {
-      await createBooking({ ...form });
+      const selectedService = flatServices.find((s) => s.value === form.service);
+      await createBooking({
+        ...form,
+        serviceLabel: selectedService?.label || form.service,
+      });
       setSubmitted(true);
       setForm(initialForm);
       setTimeout(() => setSubmitted(false), 5000);

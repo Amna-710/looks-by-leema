@@ -125,3 +125,45 @@ Or paste `storage.rules` in **Storage → Rules** tab.
 - Anyone can submit bookings (create only) on the public site
 - Public site reads services and policies without auth
 - Never commit `.env` to version control
+
+## 10. Booking Confirmation Emails
+
+Customer booking emails are sent automatically when:
+
+1. A customer submits a booking → **“In Process”** email
+2. Admin sets status to **Confirmed** → confirmation email
+3. Admin sets status to **Cancelled** → cancellation email
+
+Emails use **Gmail SMTP** via a **Vercel serverless API** (`/api/booking-email`). Bookings are always saved first — email failures never block the booking.
+
+### Required Vercel environment variables
+
+Add these in **Vercel → Project → Settings → Environment Variables** (never use `VITE_` for secrets):
+
+| Variable | Example |
+|----------|---------|
+| `FIREBASE_PROJECT_ID` | `looksbyleema-47c1e` |
+| `SMTP_USER` | `looksbyleema@gmail.com` |
+| `SMTP_PASS` | Gmail app password |
+| `SMTP_HOST` | `smtp.gmail.com` |
+| `SMTP_PORT` | `587` |
+| `EMAIL_FROM` | `Looks By Leema <looksbyleema@gmail.com>` |
+
+For local dev, add the same vars to `.env` (see `.env.example`).
+
+### Deploy Firestore rules (required for admin to see bookings)
+
+```bash
+firebase deploy --only firestore:rules
+```
+
+Without this, bookings may save but the admin panel cannot read them (permission denied).
+
+### Optional: Firebase Cloud Functions
+
+The `functions/` folder also contains Firestore email triggers as a backup. Deploy with:
+
+```bash
+firebase functions:secrets:set SMTP_PASS
+npm run deploy:functions
+```

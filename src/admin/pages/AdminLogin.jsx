@@ -20,15 +20,32 @@ export default function AdminLogin() {
     e.preventDefault();
     setError('');
     setSubmitting(true);
+    console.log('[admin-auth] AdminLogin submit', {
+      email: email.trim().toLowerCase(),
+      passwordLength: password.length,
+      isConfigured,
+    });
     try {
       await login(email, password);
+      console.log('[admin-auth] AdminLogin submit → success (awaiting redirect)');
     } catch (err) {
-      if (err.code === 'auth/invalid-credential') {
+      // Exact Firebase / app error code for debugging (DevTools console)
+      console.error('[admin-auth] AdminLogin EXACT ERROR CODE:', err.code ?? '(none)');
+      console.error('[admin-auth] AdminLogin error details:', {
+        code: err.code,
+        message: err.message,
+        full: err,
+      });
+      if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found') {
         setError('Invalid email or password');
       } else if (err.code === 'auth/unauthorized-admin') {
         setError('This email is not authorized for admin access.');
       } else if (err.code === 'auth/email-not-verified') {
         setError(err.message);
+      } else if (err.code === 'auth/too-many-requests') {
+        setError('Too many failed attempts. Please try again later.');
+      } else if (err.code === 'auth/network-request-failed') {
+        setError('Network error. Check your connection and try again.');
       } else {
         setError(err.message || 'Login failed');
       }

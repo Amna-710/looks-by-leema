@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeProvider';
-import { AuthProvider } from './context/AuthProvider';
 import LoadingScreen from './components/LoadingScreen';
 import Layout from './components/Layout';
-import ProtectedRoute from './admin/components/ProtectedRoute';
 import Home from './pages/Home';
 import AboutPage from './pages/About';
 import ServicesPage from './pages/Services';
@@ -12,7 +10,6 @@ import PoliciesPage from './pages/Policies';
 import BookingPage from './pages/Booking';
 import ContactPage from './pages/Contact';
 import ServiceShowcasePage from './pages/ServiceShowcase';
-import AdminLogin from './admin/pages/AdminLogin';
 import AdminDashboard from './admin/pages/AdminDashboard';
 import './admin/Admin.css';
 import './admin/components/AdminLayout.css';
@@ -24,37 +21,29 @@ export default function App() {
 
   return (
     <ThemeProvider>
-      <AuthProvider>
-        {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
-        <BrowserRouter>
-          <Routes>
-            <Route element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route path="about" element={<AboutPage />} />
-              <Route path="services" element={<ServicesPage />} />
-              <Route path="policies" element={<PoliciesPage />} />
-              <Route path="booking" element={<BookingPage />} />
-              <Route path="contact" element={<ContactPage />} />
-              <Route path="soft-glam" element={<ServiceShowcasePage />} />
-              <Route path="facials" element={<ServiceShowcasePage />} />
-              <Route path="waxing" element={<ServiceShowcasePage />} />
-              <Route path="hair" element={<ServiceShowcasePage />} />
-              <Route path="nails" element={<ServiceShowcasePage />} />
-              <Route path="lashes" element={<ServiceShowcasePage />} />
-            </Route>
+      {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="about" element={<AboutPage />} />
+            <Route path="services" element={<ServicesPage />} />
+            <Route path="policies" element={<PoliciesPage />} />
+            <Route path="booking" element={<BookingPage />} />
+            <Route path="contact" element={<ContactPage />} />
+            <Route path="soft-glam" element={<ServiceShowcasePage />} />
+            <Route path="facials" element={<ServiceShowcasePage />} />
+            <Route path="waxing" element={<ServiceShowcasePage />} />
+            <Route path="hair" element={<ServiceShowcasePage />} />
+            <Route path="nails" element={<ServiceShowcasePage />} />
+            <Route path="lashes" element={<ServiceShowcasePage />} />
+          </Route>
 
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route
-              path="/admin/dashboard"
-              element={
-                <ProtectedRoute>
-                  <AdminDashboard />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-        </BrowserRouter>
-      </AuthProvider>
+          <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
+          <Route path="/admin/login" element={<Navigate to="/admin/dashboard" replace />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        </Routes>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }

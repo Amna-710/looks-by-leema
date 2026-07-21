@@ -28,7 +28,7 @@ export function formatFirestoreError(err) {
     case 'unavailable':
       return 'Cannot reach Firestore. Enable Firestore Database in Firebase Console, deploy security rules, and check your internet connection.';
     case 'permission-denied':
-      return 'Permission denied. Make sure you are logged in as an admin and Firestore rules allow authenticated writes.';
+      return 'Permission denied reading bookings. Deploy updated Firestore rules: firebase deploy --only firestore:rules';
     case 'not-found':
       return 'Document not found in Firestore. Try refreshing the page to re-sync data.';
     case 'failed-precondition':

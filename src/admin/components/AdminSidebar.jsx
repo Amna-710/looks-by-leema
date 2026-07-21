@@ -1,5 +1,4 @@
-import { NavLink, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
+import { NavLink } from 'react-router-dom';
 import './AdminSidebar.css';
 
 const navItems = [
@@ -13,14 +12,6 @@ const navItems = [
 ];
 
 export default function AdminSidebar({ activeTab, onTabChange, mobileOpen, onClose }) {
-  const { logout, user } = useAuth();
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    await logout();
-    navigate('/admin/login');
-  };
-
   return (
     <>
       {mobileOpen && <div className="admin-sidebar__overlay" onClick={onClose} aria-hidden="true" />}
@@ -45,13 +36,9 @@ export default function AdminSidebar({ activeTab, onTabChange, mobileOpen, onClo
         </nav>
 
         <div className="admin-sidebar__footer">
-          <p className="admin-sidebar__email">{user?.email}</p>
           <NavLink to="/" className="admin-sidebar__site-link" onClick={onClose}>
             View Website
           </NavLink>
-          <button type="button" className="admin-sidebar__logout" onClick={handleLogout}>
-            Sign Out
-          </button>
         </div>
       </aside>
     </>

@@ -17,13 +17,21 @@ function formatDate(date) {
 export default function BookingsManager() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState('');
   const [filter, setFilter] = useState('all');
 
   useEffect(() => {
-    const unsubscribe = subscribeBookings((data) => {
-      setBookings(data);
-      setLoading(false);
-    });
+    const unsubscribe = subscribeBookings(
+      (data) => {
+        setBookings(data);
+        setFetchError('');
+        setLoading(false);
+      },
+      (message) => {
+        setFetchError(message);
+        setLoading(false);
+      }
+    );
     return unsubscribe;
   }, []);
 
@@ -43,6 +51,12 @@ export default function BookingsManager() {
 
   return (
     <div className="admin-panel">
+      {fetchError && (
+        <div className="admin-alert admin-alert--error" style={{ marginBottom: '1rem' }}>
+          <strong>Could not load bookings:</strong> {fetchError}
+          {' '}Deploy updated Firestore rules with <code>firebase deploy --only firestore:rules</code>.
+        </div>
+      )}
       <div className="admin-toolbar">
         <label>
           Filter by status
@@ -81,7 +95,7 @@ export default function BookingsManager() {
                     <div>{booking.email}</div>
                     <div className="admin-muted">{booking.phone}</div>
                   </td>
-                  <td>{booking.service}</td>
+                  <td>{booking.serviceLabel || booking.service}</td>
                   <td>
                     {booking.date}<br />
                     <span className="admin-muted">{booking.time}</span>

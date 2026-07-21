@@ -16,6 +16,29 @@ const firebaseConfig = {
   databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
 };
 
+/** Expected Firebase project (where the admin user was created) */
+export const EXPECTED_FIREBASE_PROJECT_ID = 'looksbyleema-52909';
+
+/** Safe summary for debugging (never logs the full API key) */
+export function getFirebaseDebugInfo() {
+  const projectId = firebaseConfig.projectId || '(missing)';
+  const matchesExpected =
+    projectId.trim().toLowerCase() === EXPECTED_FIREBASE_PROJECT_ID.toLowerCase();
+
+  return {
+    projectId,
+    authDomain: firebaseConfig.authDomain || '(missing)',
+    storageBucket: firebaseConfig.storageBucket || '(missing)',
+    databaseURL: firebaseConfig.databaseURL || '(missing)',
+    appId: firebaseConfig.appId || '(missing)',
+    apiKeyPrefix: firebaseConfig.apiKey
+      ? `${String(firebaseConfig.apiKey).slice(0, 8)}…`
+      : '(missing)',
+    expectedProjectId: EXPECTED_FIREBASE_PROJECT_ID,
+    matchesExpectedProject: matchesExpected,
+  };
+}
+
 /** True when all required Firebase env vars are set */
 export const isFirebaseConfigured = () =>
   Boolean(
@@ -36,10 +59,23 @@ let rtdb = null;
 let analytics = null;
 
 if (isFirebaseConfigured()) {
+  const debug = getFirebaseDebugInfo();
+  console.log('[admin-auth] Firebase config loaded from .env', debug);
+  if (!debug.matchesExpectedProject) {
+    console.error(
+      '[admin-auth] PROJECT MISMATCH: app is connected to',
+      JSON.stringify(debug.projectId),
+      'but expected',
+      JSON.stringify(EXPECTED_FIREBASE_PROJECT_ID),
+      '— admin users in LooksByLeema-52909 will NOT authenticate against this project.'
+    );
+  }
+
   // Initialize app only once (prevents duplicate-app errors on HMR)
   app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 
   auth = getAuth(app);
+  console.log('[admin-auth] Firebase Auth initialized for project:', app.options.projectId);
 
   // Standard Firestore init — avoid memoryLocalCache() which triggers SDK ca9/b815
   // assertion failures when mixed with onSnapshot + one-shot reads (firebase-js-sdk#10008)

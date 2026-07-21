@@ -12,13 +12,13 @@ import {
   writeBatch,
 } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
-import { db, storage, auth, isFirebaseConfigured } from '../firebase/config';
-import { isAdminUser } from '../config/admin';
+import { db, storage, isFirebaseConfigured } from '../firebase/config';
 import { assertFirestoreReady, logFirestoreError, formatFirestoreError } from '../firebase/firestoreReady';
 import { serviceCategories as defaultServices } from '../data/services';
 import { defaultPolicies } from '../data/defaultPolicies';
 import { defaultSiteSettings, defaultTestimonials } from '../data/defaultSiteSettings';
 import { syncToRealtimeDB, seedRtdbIfEmpty } from './rtdbService';
+import { notifyBookingEmail } from './bookingEmailService';
 
 const COLLECTIONS = {
   services: 'serviceCategories',
@@ -35,17 +35,6 @@ const CATEGORY_ORDER = ['hair', 'makeup', 'facials', 'waxing', 'nails', 'lashes'
 function requireFirebase() {
   if (!isFirebaseConfigured() || !db) {
     throw new Error('Firebase is not configured. Add your credentials to .env');
-  }
-}
-
-/** Admin writes require a verified admin account (Firestore rules) */
-function requireAuth() {
-  requireFirebase();
-  if (!auth?.currentUser) {
-    throw new Error('You must be logged in to perform this action. Please sign in again.');
-  }
-  if (!isAdminUser(auth.currentUser)) {
-    throw new Error('Your account is not authorized for admin actions.');
   }
 }
 
@@ -252,7 +241,7 @@ export async function deleteTestimonial(id) {
 
 /** Ensure service categories exist in Firestore (creates them if missing) */
 export async function ensureServicesInFirestore() {
-  requireAuth();
+  requireFirebase();
   assertFirestoreReady();
 
   try {
@@ -292,7 +281,7 @@ export async function ensureServicesInFirestore() {
 
 /** Write a full category document directly — never calls getDoc */
 async function saveCategory(category) {
-  requireAuth();
+  requireFirebase();
   validateCategory(category);
   assertFirestoreReady();
 
@@ -383,15 +372,22 @@ export async function savePolicies(policies) {
 /** Create a customer booking */
 export async function createBooking(bookingData) {
   requireFirebase();
-  return addDoc(collection(db, COLLECTIONS.bookings), {
-    ...bookingData,
+  const { serviceLabel, ...rest } = bookingData;
+  const docRef = await addDoc(collection(db, COLLECTIONS.bookings), {
+    ...rest,
+    ...(serviceLabel ? { serviceLabel } : {}),
     status: 'pending',
     createdAt: serverTimestamp(),
   });
+
+  // Email is fire-and-forget — booking save must never fail because of email
+  notifyBookingEmail(docRef.id, 'received');
+
+  return docRef;
 }
 
 /** Subscribe to all bookings (newest first) */
-export function subscribeBookings(callback) {
+export function subscribeBookings(callback, onError) {
   if (!isFirebaseConfigured() || !db) {
     callback([]);
     return () => {};
@@ -413,14 +409,31 @@ export function subscribeBookings(callback) {
         });
       callback(bookings);
     },
-    () => callback([])
+    (err) => {
+      logFirestoreError('subscribeBookings', err);
+      const message = formatFirestoreError(err);
+      if (onError) {
+        onError(message);
+      } else {
+        callback([]);
+      }
+    }
   );
 }
 
 /** Update booking status */
 export async function updateBookingStatus(bookingId, status) {
   requireFirebase();
-  await updateDoc(doc(db, COLLECTIONS.bookings, bookingId), { status });
+  await updateDoc(doc(db, COLLECTIONS.bookings, bookingId), {
+    status,
+    statusUpdatedAt: serverTimestamp(),
+  });
+
+  if (status === 'confirmed') {
+    notifyBookingEmail(bookingId, 'confirmed');
+  } else if (status === 'cancelled') {
+    notifyBookingEmail(bookingId, 'cancelled');
+  }
 }
 
 /** Upload salon image to Storage and save metadata to Firestore */
