@@ -14,6 +14,8 @@ function bookingEmailDevApi(env) {
         Object.assign(process.env, {
           FIREBASE_PROJECT_ID: env.VITE_FIREBASE_PROJECT_ID,
           VITE_FIREBASE_PROJECT_ID: env.VITE_FIREBASE_PROJECT_ID,
+          FIREBASE_DATABASE_URL: env.VITE_FIREBASE_DATABASE_URL,
+          VITE_FIREBASE_DATABASE_URL: env.VITE_FIREBASE_DATABASE_URL,
           SMTP_USER: env.SMTP_USER,
           SMTP_PASS: env.SMTP_PASS,
           SMTP_HOST: env.SMTP_HOST,

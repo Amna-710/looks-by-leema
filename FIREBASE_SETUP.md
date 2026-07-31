@@ -76,8 +76,8 @@ firebase deploy --only database
 
 Or paste `database.rules.json` in the **Realtime Database → Rules** tab.
 
-Your database URL is already in `.env`:
-`https://looksbyleema-47c1e-default-rtdb.firebaseio.com`
+Your database URL for `looksbyleema-52909`:
+`https://looksbyleema-52909-default-rtdb.firebaseio.com`
 
 ## 7. Enable Storage
 
@@ -142,7 +142,7 @@ Add these in **Vercel → Project → Settings → Environment Variables** (neve
 
 | Variable | Example |
 |----------|---------|
-| `FIREBASE_PROJECT_ID` | `looksbyleema-47c1e` |
+| `FIREBASE_PROJECT_ID` | `looksbyleema-52909` |
 | `SMTP_USER` | `looksbyleema@gmail.com` |
 | `SMTP_PASS` | Gmail app password |
 | `SMTP_HOST` | `smtp.gmail.com` |
@@ -154,10 +154,48 @@ For local dev, add the same vars to `.env` (see `.env.example`).
 ### Deploy Firestore rules (required for admin to see bookings)
 
 ```bash
-firebase deploy --only firestore:rules
+npm run deploy:rules
 ```
 
 Without this, bookings may save but the admin panel cannot read them (permission denied).
+
+## 11. Firebase Deployment (`looksbyleema-52909`)
+
+Project ID is configured in `.firebaserc` as **`looksbyleema-52909`**.
+
+### Verify login
+
+```bash
+npx firebase-tools login:list
+# Must show: 221370016@gift.edu.pk (or your deploy account)
+
+npx firebase-tools projects:list
+# Must include: looksbyleema-52909
+```
+
+### Deploy by service (recommended)
+
+| Command | What it deploys | Prerequisite |
+|---------|-----------------|--------------|
+| `npm run deploy:rules` | `firestore.rules` | Firestore enabled ✅ |
+| `npm run deploy:storage` | `storage.rules` | [Enable Storage](https://console.firebase.google.com/project/looksbyleema-52909/storage) |
+| `npm run deploy:database` | `database.rules.json` | [Create Realtime Database](https://console.firebase.google.com/project/looksbyleema-52909/database) |
+| `npm run deploy:functions` | Booking email triggers | **Blaze plan** + `firebase functions:secrets:set SMTP_PASS` |
+
+Functions use **Node.js 22** (`functions/package.json` → `engines.node`). Local Node v22 matches the cloud runtime; the `EBADENGINE` warning is resolved.
+
+**Actual Functions deploy blocker:** `looksbyleema-52909` must be on the **Blaze (pay-as-you-go) plan**. Spark/free projects cannot deploy Cloud Functions. Error:
+`Your project looksbyleema-52909 must be on the Blaze (pay-as-you-go) plan...`
+
+### Why full `npm run deploy:firebase` may fail
+
+1. **Realtime Database not created** on `52909` → run `npm run deploy:database` after creating RTDB in Console
+2. **Storage not enabled** on `52909` → enable Storage in Console, then `npm run deploy:storage`
+3. **Cloud Functions require Blaze** → upgrade at [Usage & billing](https://console.firebase.google.com/project/looksbyleema-52909/usage/details), set SMTP secret, then `npm run deploy:functions`
+
+### Email on Vercel (no Blaze required)
+
+Booking emails also work via `/api/booking-email` on Vercel using `SMTP_*` env vars — see section 10 above.
 
 ### Optional: Firebase Cloud Functions
 

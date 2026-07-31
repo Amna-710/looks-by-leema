@@ -18,7 +18,12 @@ import { serviceCategories as defaultServices } from '../data/services';
 import { defaultPolicies } from '../data/defaultPolicies';
 import { defaultSiteSettings, defaultTestimonials } from '../data/defaultSiteSettings';
 import { syncToRealtimeDB, seedRtdbIfEmpty } from './rtdbService';
-import { notifyBookingEmail } from './bookingEmailService';
+export {
+  createBooking,
+  subscribeBookings,
+  confirmBooking,
+  cancelBooking,
+} from './rtdbService';
 
 const COLLECTIONS = {
   services: 'serviceCategories',
@@ -367,73 +372,6 @@ export async function savePolicies(policies) {
   requireFirebase();
   const policiesRef = doc(db, COLLECTIONS.policies, 'main');
   await setDoc(policiesRef, { policies, updatedAt: serverTimestamp() }, { merge: true });
-}
-
-/** Create a customer booking */
-export async function createBooking(bookingData) {
-  requireFirebase();
-  const { serviceLabel, ...rest } = bookingData;
-  const docRef = await addDoc(collection(db, COLLECTIONS.bookings), {
-    ...rest,
-    ...(serviceLabel ? { serviceLabel } : {}),
-    status: 'pending',
-    createdAt: serverTimestamp(),
-  });
-
-  // Email is fire-and-forget — booking save must never fail because of email
-  notifyBookingEmail(docRef.id, 'received');
-
-  return docRef;
-}
-
-/** Subscribe to all bookings (newest first) */
-export function subscribeBookings(callback, onError) {
-  if (!isFirebaseConfigured() || !db) {
-    callback([]);
-    return () => {};
-  }
-
-  return onSnapshot(
-    collection(db, COLLECTIONS.bookings),
-    (snapshot) => {
-      const bookings = snapshot.docs
-        .map((d) => ({
-          id: d.id,
-          ...d.data(),
-          createdAt: d.data().createdAt?.toDate?.() || null,
-        }))
-        .sort((a, b) => {
-          const ta = a.createdAt?.getTime?.() || 0;
-          const tb = b.createdAt?.getTime?.() || 0;
-          return tb - ta;
-        });
-      callback(bookings);
-    },
-    (err) => {
-      logFirestoreError('subscribeBookings', err);
-      const message = formatFirestoreError(err);
-      if (onError) {
-        onError(message);
-      } else {
-        callback([]);
-      }
-    }
-  );
-}
-
-/** Update booking status */
-export async function updateBookingStatus(bookingId, status) {
-  requireFirebase();
-  await updateDoc(doc(db, COLLECTIONS.bookings, bookingId), {
-    status,
-    statusUpdatedAt: serverTimestamp(),
-  });
-
-  if (status === 'confirmed') {
-    notifyBookingEmail(bookingId, 'confirmed');
-  } else if (status === 'cancelled') {
-    notifyBookingEmail(bookingId, 'cancelled');
-  }
 }
 
 /** Upload salon image to Storage and save metadata to Firestore */

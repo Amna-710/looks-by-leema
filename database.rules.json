@@ -9,6 +9,13 @@
         ".read": true,
         ".write": true
       }
+    },
+    "bookings": {
+      ".read": true,
+      "$bookingId": {
+        ".write": true,
+        ".validate": "newData.hasChildren(['fullName', 'email', 'phone', 'service', 'date', 'time', 'status'])"
+      }
     }
   }
 }

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useServicesData } from '../hooks/useServicesData';
 import { createBooking } from '../services/firestoreService';
-import { isFirebaseConfigured } from '../firebase/config';
+import { isFirebaseConfigured, isRtdbConfigured } from '../firebase/config';
 import { fadeInUp } from '../utils/animations';
 import './Booking.css';
 
@@ -87,7 +87,7 @@ export default function Booking() {
       return;
     }
 
-    if (!isFirebaseConfigured()) {
+    if (!isFirebaseConfigured() || !isRtdbConfigured()) {
       setSubmitError('Online booking is temporarily unavailable. Please call us to book.');
       return;
     }

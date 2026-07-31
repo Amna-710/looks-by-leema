@@ -3,12 +3,13 @@
   "private": true,
   "main": "index.js",
   "engines": {
-    "node": "20"
+    "node": "22"
   },
   "scripts": {
     "serve": "firebase emulators:start --only functions,firestore",
     "shell": "firebase functions:shell",
-    "deploy": "firebase deploy --only functions"
+    "deploy": "firebase deploy --only functions",
+    "build": "node -e \"require('./index.js'); console.log('functions build OK')\""
   },
   "dependencies": {
     "firebase-admin": "^13.6.0",

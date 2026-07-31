@@ -107,7 +107,6 @@ exports.onBookingUpdatedSendEmail = onDocumentUpdated(
 
     if (!after) return;
     if (before.status === after.status) return;
-    if (before.status === after.status) return;
 
     if (after.status === 'confirmed' && !after.confirmedEmailSentAt) {
       applyEmailEnv();

@@ -1,11 +1,46 @@
-import { ref, set, onValue, off, get } from 'firebase/database';
+import { ref, set, onValue, off, get, push, update } from 'firebase/database';
 import { rtdb, isRtdbConfigured } from '../firebase/config';
 import { defaultSiteSettings, defaultTestimonials } from '../data/defaultSiteSettings';
+import { notifyBookingEmail } from './bookingEmailService';
 
 const PATHS = {
   site: 'site/settings',
   testimonials: 'site/testimonials',
+  bookings: 'bookings',
 };
+
+function requireRtdb() {
+  if (!isRtdbConfigured() || !rtdb) {
+    throw new Error(
+      'Firebase Realtime Database is not configured. Set VITE_FIREBASE_DATABASE_URL in your environment.'
+    );
+  }
+  return rtdb;
+}
+
+function normalizeBooking(id, data) {
+  if (!data) return null;
+  const createdAt =
+    typeof data.createdAt === 'number'
+      ? new Date(data.createdAt)
+      : data.createdAt
+        ? new Date(data.createdAt)
+        : null;
+
+  return {
+    id,
+    ...data,
+    createdAt,
+  };
+}
+
+function sortBookings(list) {
+  return list.sort((a, b) => {
+    const ta = a.createdAt?.getTime?.() || 0;
+    const tb = b.createdAt?.getTime?.() || 0;
+    return tb - ta;
+  });
+}
 
 /** Push latest site data to Realtime Database for live sync */
 export async function syncToRealtimeDB({ settings, testimonials }) {
@@ -74,4 +109,111 @@ export async function seedRtdbIfEmpty() {
       testimonials: defaultTestimonials,
     });
   }
+}
+
+/** Create a customer booking in Realtime Database (no email on submit) */
+export async function createBooking(bookingData) {
+  const db = requireRtdb();
+  const { serviceLabel, ...rest } = bookingData;
+  const bookingsRef = ref(db, PATHS.bookings);
+  const newRef = push(bookingsRef);
+  const now = Date.now();
+
+  await set(newRef, {
+    ...rest,
+    ...(serviceLabel ? { serviceLabel } : {}),
+    status: 'pending',
+    createdAt: now,
+  });
+
+  return { id: newRef.key };
+}
+
+/** Subscribe to all bookings (newest first) */
+export function subscribeBookings(callback, onError) {
+  if (!isRtdbConfigured() || !rtdb) {
+    callback([]);
+    return () => {};
+  }
+
+  const bookingsRef = ref(rtdb, PATHS.bookings);
+
+  const listener = (snapshot) => {
+    if (!snapshot.exists()) {
+      callback([]);
+      return;
+    }
+
+    const data = snapshot.val();
+    const bookings = Object.entries(data)
+      .map(([id, value]) => normalizeBooking(id, value))
+      .filter(Boolean);
+    callback(sortBookings(bookings));
+  };
+
+  const errorHandler = (err) => {
+    const message = err?.message || 'Could not load bookings from Realtime Database';
+    console.error('[bookings] subscribeBookings failed:', err);
+    if (onError) onError(message);
+    else callback([]);
+  };
+
+  onValue(bookingsRef, listener, errorHandler);
+
+  return () => off(bookingsRef, 'value', listener);
+}
+
+/** Admin confirms a pending booking and sends confirmation email */
+export async function confirmBooking(bookingId) {
+  const db = requireRtdb();
+  const bookingRef = ref(db, `${PATHS.bookings}/${bookingId}`);
+  const snap = await get(bookingRef);
+
+  if (!snap.exists()) {
+    throw new Error('Booking not found');
+  }
+
+  const booking = snap.val();
+  if (booking.status === 'confirmed') {
+    return;
+  }
+  if (booking.status === 'cancelled') {
+    throw new Error('This booking was already cancelled');
+  }
+
+  await update(bookingRef, {
+    status: 'confirmed',
+    statusUpdatedAt: Date.now(),
+  });
+
+  notifyBookingEmail(bookingId, 'confirmed');
+}
+
+/** Admin cancels a booking with reason and sends cancellation email */
+export async function cancelBooking(bookingId, cancellationReason) {
+  const reason = cancellationReason?.trim();
+  if (!reason) {
+    throw new Error('Cancellation reason is required');
+  }
+
+  const db = requireRtdb();
+  const bookingRef = ref(db, `${PATHS.bookings}/${bookingId}`);
+  const snap = await get(bookingRef);
+
+  if (!snap.exists()) {
+    throw new Error('Booking not found');
+  }
+
+  const booking = snap.val();
+  if (booking.status === 'cancelled') {
+    return;
+  }
+
+  await update(bookingRef, {
+    status: 'cancelled',
+    cancellationReason: reason,
+    statusUpdatedAt: Date.now(),
+  });
+
+  notifyBookingEmail(bookingId, 'cancelled');
 }

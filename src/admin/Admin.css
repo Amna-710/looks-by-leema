@@ -243,3 +243,23 @@
 .admin-badge--confirmed { background: #d4edda; color: #155724; }
 .admin-badge--completed { background: #cce5ff; color: #004085; }
 .admin-badge--cancelled { background: #f8d7da; color: #721c24; }
+
+.admin-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1000;
+}
+
+.admin-modal {
+  width: min(100%, 520px);
+  margin: 0;
+}
+
+.admin-modal h2 {
+  margin-top: 0;
+}
