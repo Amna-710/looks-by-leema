@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeProvider';
+import { AuthProvider } from './context/AuthProvider';
 import LoadingScreen from './components/LoadingScreen';
 import Layout from './components/Layout';
 import Home from './pages/Home';
@@ -10,7 +11,7 @@ import PoliciesPage from './pages/Policies';
 import BookingPage from './pages/Booking';
 import ContactPage from './pages/Contact';
 import ServiceShowcasePage from './pages/ServiceShowcase';
-import AdminDashboard from './admin/pages/AdminDashboard';
+import AdminRoute from './admin/components/AdminRoute';
 import './admin/Admin.css';
 import './admin/components/AdminLayout.css';
 import './admin/components/AdminSidebar.css';
@@ -23,26 +24,28 @@ export default function App() {
     <ThemeProvider>
       {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
       <BrowserRouter>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="about" element={<AboutPage />} />
-            <Route path="services" element={<ServicesPage />} />
-            <Route path="policies" element={<PoliciesPage />} />
-            <Route path="booking" element={<BookingPage />} />
-            <Route path="contact" element={<ContactPage />} />
-            <Route path="soft-glam" element={<ServiceShowcasePage />} />
-            <Route path="facials" element={<ServiceShowcasePage />} />
-            <Route path="waxing" element={<ServiceShowcasePage />} />
-            <Route path="hair" element={<ServiceShowcasePage />} />
-            <Route path="nails" element={<ServiceShowcasePage />} />
-            <Route path="lashes" element={<ServiceShowcasePage />} />
-          </Route>
+        <AuthProvider>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="about" element={<AboutPage />} />
+              <Route path="services" element={<ServicesPage />} />
+              <Route path="policies" element={<PoliciesPage />} />
+              <Route path="booking" element={<BookingPage />} />
+              <Route path="contact" element={<ContactPage />} />
+              <Route path="soft-glam" element={<ServiceShowcasePage />} />
+              <Route path="facials" element={<ServiceShowcasePage />} />
+              <Route path="waxing" element={<ServiceShowcasePage />} />
+              <Route path="hair" element={<ServiceShowcasePage />} />
+              <Route path="nails" element={<ServiceShowcasePage />} />
+              <Route path="lashes" element={<ServiceShowcasePage />} />
+            </Route>
 
-          <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
-          <Route path="/admin/login" element={<Navigate to="/admin/dashboard" replace />} />
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        </Routes>
+            <Route path="/admin" element={<AdminRoute />} />
+            <Route path="/admin/login" element={<Navigate to="/admin" replace />} />
+            <Route path="/admin/dashboard" element={<Navigate to="/admin" replace />} />
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </ThemeProvider>
   );

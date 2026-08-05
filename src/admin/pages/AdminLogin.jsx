@@ -10,7 +10,7 @@ export default function AdminLogin() {
   const [submitting, setSubmitting] = useState(false);
   const { user, login, loading, isConfigured } = useAuth();
   const location = useLocation();
-  const from = location.state?.from?.pathname || '/admin/dashboard';
+  const from = location.state?.from?.pathname || '/admin';
 
   if (!loading && user) {
     return <Navigate to={from} replace />;

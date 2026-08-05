@@ -1,10 +1,10 @@
-import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
+import AdminLogin from '../pages/AdminLogin';
+import AdminDashboard from '../pages/AdminDashboard';
 
-/** Redirects unauthenticated or non-admin users to admin login */
-export default function ProtectedRoute({ children }) {
+/** /admin — login when signed out, dashboard when authenticated admin */
+export default function AdminRoute() {
   const { user, loading, isAdmin, isConfigured } = useAuth();
-  const location = useLocation();
 
   if (loading) {
     return (
@@ -25,8 +25,8 @@ export default function ProtectedRoute({ children }) {
   }
 
   if (!user || !isAdmin) {
-    return <Navigate to="/admin" state={{ from: location }} replace />;
+    return <AdminLogin />;
   }
 
-  return children;
+  return <AdminDashboard />;
 }
