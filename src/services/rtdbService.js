@@ -174,7 +174,15 @@ export async function confirmBooking(bookingId) {
   }
 
   const booking = snap.val();
+  console.log('[bookings] Confirm clicked — booking loaded', {
+    bookingId,
+    email: booking.email,
+    fullName: booking.fullName,
+    status: booking.status,
+  });
+
   if (booking.status === 'confirmed') {
+    console.log('[bookings] Already confirmed — skipping', { bookingId });
     return;
   }
   if (booking.status === 'cancelled') {
@@ -184,9 +192,23 @@ export async function confirmBooking(bookingId) {
   await update(bookingRef, {
     status: 'confirmed',
     statusUpdatedAt: Date.now(),
+    emailSent: false,
   });
 
-  notifyBookingEmail(bookingId, 'confirmed');
+  console.log('[bookings] Status saved as confirmed — calling email API', { bookingId });
+
+  try {
+    await notifyBookingEmail(bookingId, 'confirmed');
+    console.log('[bookings] Confirmation email flow completed', { bookingId });
+  } catch (err) {
+    console.error('[bookings] Confirmation email failed', { bookingId, error: err.message });
+    await update(bookingRef, {
+      emailSent: false,
+      emailError: err.message || 'Email delivery failed',
+      emailAttemptedAt: Date.now(),
+    });
+    throw err;
+  }
 }
 
 /** Admin cancels a booking with reason and sends cancellation email */
@@ -213,7 +235,21 @@ export async function cancelBooking(bookingId, cancellationReason) {
     status: 'cancelled',
     cancellationReason: reason,
     statusUpdatedAt: Date.now(),
+    emailSent: false,
   });
 
-  notifyBookingEmail(bookingId, 'cancelled');
+  console.log('[bookings] Status saved as cancelled — calling email API', { bookingId });
+
+  try {
+    await notifyBookingEmail(bookingId, 'cancelled');
+    console.log('[bookings] Cancellation email flow completed', { bookingId });
+  } catch (err) {
+    console.error('[bookings] Cancellation email failed', { bookingId, error: err.message });
+    await update(bookingRef, {
+      emailSent: false,
+      emailError: err.message || 'Email delivery failed',
+      emailAttemptedAt: Date.now(),
+    });
+    throw err;
+  }
 }

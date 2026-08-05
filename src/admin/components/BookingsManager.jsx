@@ -51,12 +51,18 @@ export default function BookingsManager() {
     return unsubscribe;
   }, []);
 
-  const handleConfirm = async (bookingId) => {
+  const handleConfirm = async (bookingId, booking) => {
+    console.log('[bookings] Confirm Booking button clicked', {
+      bookingId,
+      email: booking.email,
+      fullName: booking.fullName,
+    });
     setBusyId(bookingId);
     try {
       await confirmBooking(bookingId);
     } catch (err) {
-      alert(err.message || 'Failed to confirm booking');
+      console.error('[bookings] Confirm Booking failed', err);
+      alert(`Booking confirmed in Firebase, but the customer email failed:\n\n${err.message}`);
     } finally {
       setBusyId('');
     }
@@ -90,6 +96,7 @@ export default function BookingsManager() {
       await cancelBooking(cancelTarget.id, reason);
       closeCancelModal();
     } catch (err) {
+      console.error('[bookings] Cancel Booking failed', err);
       setCancelError(err.message || 'Failed to cancel booking');
     } finally {
       setBusyId('');
@@ -138,6 +145,7 @@ export default function BookingsManager() {
                 <th>Service</th>
                 <th>Date & Time</th>
                 <th>Status</th>
+                <th>Email</th>
                 <th>Submitted</th>
                 <th>Actions</th>
               </tr>
@@ -167,6 +175,17 @@ export default function BookingsManager() {
                         </div>
                       )}
                     </td>
+                    <td>
+                      {booking.emailSent ? (
+                        <span className="admin-muted">Sent ✓</span>
+                      ) : booking.emailError ? (
+                        <span className="form-error" title={booking.emailError}>Failed</span>
+                      ) : booking.status === 'pending' ? (
+                        <span className="admin-muted">On confirm</span>
+                      ) : (
+                        <span className="admin-muted">—</span>
+                      )}
+                    </td>
                     <td className="admin-muted">{formatDate(booking.createdAt)}</td>
                     <td>
                       {isPending ? (
@@ -175,7 +194,7 @@ export default function BookingsManager() {
                             type="button"
                             className="admin-btn admin-btn--sm admin-btn--primary"
                             disabled={isBusy}
-                            onClick={() => handleConfirm(booking.id)}
+                            onClick={() => handleConfirm(booking.id, booking)}
                           >
                             {isBusy ? 'Saving…' : 'Confirm Booking'}
                           </button>
