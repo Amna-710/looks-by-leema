@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useServicesData } from '../hooks/useServicesData';
 import { createBooking } from '../services/firestoreService';
@@ -15,6 +16,10 @@ const initialForm = {
   time: '',
   message: '',
 };
+
+function getPreselectedService(location, searchParams) {
+  return location.state?.service || searchParams.get('service') || '';
+}
 
 function validateForm(data) {
   const errors = {};
@@ -63,12 +68,24 @@ function validateForm(data) {
 
 /** Booking form — saves submissions to Firestore */
 export default function Booking() {
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
   const { flatServices } = useServicesData();
-  const [form, setForm] = useState(initialForm);
+  const [form, setForm] = useState(() => ({
+    ...initialForm,
+    service: getPreselectedService(location, searchParams),
+  }));
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState('');
   const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    const preselected = getPreselectedService(location, searchParams);
+    if (preselected) {
+      setForm((prev) => ({ ...prev, service: preselected }));
+    }
+  }, [location, searchParams]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

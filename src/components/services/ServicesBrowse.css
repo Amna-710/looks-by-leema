@@ -1,0 +1,247 @@
+/* Premium Services Browse — Looks By Leema */
+
+.services-browse {
+  overflow-x: hidden;
+}
+
+.services-browse__loading {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 3rem 0;
+}
+
+.services-browse__intro {
+  text-align: center;
+  max-width: 620px;
+  margin: 0 auto 2.25rem;
+}
+
+.services-browse__eyebrow {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rose-gold);
+  margin-bottom: 0.75rem;
+}
+
+.services-browse__heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.85rem, 3.5vw, 2.5rem);
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
+}
+
+.services-browse__subheading {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--text-secondary);
+}
+
+/* Category nav tabs */
+.svc-nav {
+  margin-bottom: 2.25rem;
+  overflow: hidden;
+}
+
+.svc-nav__scroll {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.35rem;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.svc-nav__scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.svc-nav__tab {
+  flex-shrink: 0;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.4rem;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-full);
+  background: var(--card-bg);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.svc-nav__tab:hover {
+  border-color: var(--rose-gold);
+  color: var(--rose-gold);
+}
+
+.svc-nav__tab--active {
+  background: var(--rose-gold);
+  border-color: var(--rose-gold);
+  color: var(--white);
+}
+
+.services-browse__category-header {
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto 2.5rem;
+}
+
+.services-browse__category-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.services-browse__category-tagline {
+  font-size: 0.92rem;
+  line-height: 1.75;
+  color: var(--text-secondary);
+}
+
+/* Portfolio service cards */
+.services-browse__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+}
+
+.service-portfolio-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 8px 32px var(--shadow-color);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.service-portfolio-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 48px rgba(183, 110, 121, 0.14);
+}
+
+.service-portfolio-card__media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+
+.service-portfolio-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.service-portfolio-card:hover .service-portfolio-card__image {
+  transform: scale(1.06);
+}
+
+.service-portfolio-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 1.35rem 1.35rem 1.5rem;
+  text-align: center;
+}
+
+.service-portfolio-card__category {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rose-gold);
+  margin-bottom: 0.45rem;
+}
+
+.service-portfolio-card__name {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.35rem;
+  line-height: 1.3;
+}
+
+.service-portfolio-card__price {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--rose-gold);
+  margin-bottom: 0.65rem;
+}
+
+.service-portfolio-card__description {
+  font-size: 0.82rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin-bottom: 1.1rem;
+  flex: 1;
+}
+
+.service-portfolio-card__book {
+  width: 100%;
+  margin-top: auto;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .services-browse__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.35rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .svc-nav__scroll {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+
+  .services-browse__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .service-portfolio-card__media {
+    aspect-ratio: 3 / 4;
+  }
+
+  .service-portfolio-card__body {
+    padding: 1rem 0.9rem 1.15rem;
+  }
+
+  .service-portfolio-card__name {
+    font-size: 1rem;
+  }
+
+  .service-portfolio-card__price {
+    font-size: 1rem;
+  }
+
+  .service-portfolio-card__description {
+    display: none;
+  }
+}
+
+@media (max-width: 400px) {
+  .services-browse__grid {
+    grid-template-columns: 1fr;
+  }
+}
