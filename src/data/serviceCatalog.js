@@ -90,7 +90,7 @@ export const SERVICE_IMAGES = {
     'Mani + Pedi Combo': img('nails', 'mani-pedi-combo.jpg'),
     'Gel Manicure': img('nails', 'gel-manicure.jpg'),
     'Gel Pedicure': img('nails', 'gel-pedicure.jpg'),
-    'Nail Art': img('nails', 'nail-art.png'),
+    'Nail Art': img('nails', 'nail-art.jpg'),
     'French Add-On': img('nails', 'french-add-on.jpg'),
   },
   lashes: {
