@@ -16,6 +16,7 @@ export default function PageBanner({
   description,
   backgroundImage,
   heroImage,
+  heroImageClassName,
   videos,
   slideIntervalMs,
   fadeMs,
@@ -30,6 +31,7 @@ export default function PageBanner({
     'page-banner',
     isBookingBanner && 'page-banner--booking',
     isHeroImageBanner && 'page-banner--hero-image',
+    isHeroImageBanner && heroImageClassName,
     isVideoBanner && 'page-banner--video',
   ]
     .filter(Boolean)
@@ -107,4 +109,17 @@ const ABOUT_HERO_IMAGE = '/images/about-hero.jpg';
 /** About page banner with full-cover hero image */
 export function AboutPageBanner(props) {
   return <PageBanner {...props} heroImage={ABOUT_HERO_IMAGE} />;
+}
+
+const POLICIES_HERO_IMAGE = '/images/policies-hero.jpg';
+
+/** Policies page banner with full-cover hero image */
+export function PoliciesPageBanner(props) {
+  return (
+    <PageBanner
+      {...props}
+      heroImage={POLICIES_HERO_IMAGE}
+      heroImageClassName="page-banner--hero-image-policies"
+    />
+  );
 }
