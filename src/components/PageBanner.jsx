@@ -20,6 +20,7 @@ export default function PageBanner({
   videos,
   slideIntervalMs,
   fadeMs,
+  advanceOnVideoEnd = false,
 }) {
   const isBookingBanner = Boolean(backgroundImage);
   const isHeroImageBanner = Boolean(heroImage);
@@ -48,6 +49,7 @@ export default function PageBanner({
             videos={videos}
             slideIntervalMs={slideIntervalMs}
             fadeMs={fadeMs}
+            advanceOnVideoEnd={advanceOnVideoEnd}
           />
         </div>
       )}
@@ -71,10 +73,7 @@ export default function PageBanner({
           videos={videos}
           active={activeSlide}
           className="hero-video-slideshow__dots--banner"
-          onSelect={(index) => {
-            slideshowRef.current?.goTo(index);
-            slideshowRef.current?.restartTimer();
-          }}
+          onSelect={(index) => slideshowRef.current?.goTo(index)}
         />
       )}
 
@@ -100,6 +99,7 @@ export function ServicesPageBanner(props) {
       videos={SERVICES_HERO_VIDEOS}
       slideIntervalMs={SERVICES_HERO_SLIDE_INTERVAL_MS}
       fadeMs={SERVICES_HERO_SLIDE_FADE_MS}
+      advanceOnVideoEnd
     />
   );
 }
