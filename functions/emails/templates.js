@@ -183,26 +183,33 @@ function buildBookingConfirmedEmail(booking) {
 
   const bodyHtml = `
     <h1 style="margin:0 0 16px;font-family:Georgia,'Times New Roman',serif;font-size:28px;line-height:1.3;color:#222222;font-weight:600;">
-      Your Appointment Is Confirmed ✨
+      Your Appointment is Confirmed ✨
     </h1>
     <p style="margin:0 0 16px;font-size:16px;line-height:1.8;color:#444444;">
       Hi ${escapeHtml(customerName)},
     </p>
     <p style="margin:0 0 16px;font-size:16px;line-height:1.8;color:#444444;">
-      Wonderful news — your appointment at <strong style="color:#B76E79;">Looks By Leema</strong> has been confirmed! ✨
+      Thank you for choosing <strong style="color:#B76E79;">Looks by Leema</strong>! We&rsquo;re happy to confirm that your appointment has been successfully booked.
     </p>
     ${buildDetailsTable({ serviceName, date, time })}
     <p style="margin:0 0 16px;font-size:16px;line-height:1.8;color:#444444;">
-      We can’t wait to welcome you and help you look and feel your absolute best. If you need to make any changes, simply reply to this email or contact our team.
+      We look forward to welcoming you and creating a beautiful experience for you. Please arrive on time so we can give your appointment the attention it deserves.
+    </p>
+    <p style="margin:0 0 16px;font-size:16px;line-height:1.8;color:#444444;">
+      If you need to make any changes or have any questions, please contact us at
+      <a href="mailto:looksbyleema@gmail.com" style="color:#B76E79;text-decoration:none;"><strong>looksbyleema@gmail.com</strong></a>
+      or <strong>+1 347 888 3225</strong>.
+    </p>
+    <p style="margin:0 0 16px;font-size:16px;line-height:1.8;color:#444444;">
+      Thank you for trusting <strong style="color:#B76E79;">Looks by Leema</strong>. We can&rsquo;t wait to see you! 🤍
     </p>
     <p style="margin:0;font-size:16px;line-height:1.8;color:#444444;">
-      See you soon! 💕<br><br>
-      Best regards,<br>
-      <strong style="color:#B76E79;">Looks By Leema Team</strong>
+      Warm regards,<br>
+      <strong style="color:#B76E79;">Looks by Leema</strong>
     </p>`;
 
   return {
-    subject: 'Your Appointment Is Confirmed ✨',
+    subject: 'Your Appointment is Confirmed ✨',
     html: buildEmailShell({
       title: 'Appointment Confirmed',
       statusLabel: 'Confirmed',
@@ -212,18 +219,21 @@ function buildBookingConfirmedEmail(booking) {
     text: [
       `Hi ${customerName},`,
       '',
-      'Wonderful news — your appointment at Looks By Leema has been confirmed!',
+      'Thank you for choosing Looks by Leema! We\'re happy to confirm that your appointment has been successfully booked.',
       '',
+      'Appointment Details',
       `Service: ${serviceName}`,
       `Date: ${date}`,
       `Time: ${time}`,
       '',
-      'Status: Confirmed',
+      'We look forward to welcoming you and creating a beautiful experience for you. Please arrive on time so we can give your appointment the attention it deserves.',
       '',
-      'We can’t wait to welcome you!',
+      'If you need to make any changes or have any questions, please contact us at looksbyleema@gmail.com or +1 347 888 3225.',
       '',
-      'Best regards,',
-      'Looks By Leema Team',
+      'Thank you for trusting Looks by Leema. We can\'t wait to see you!',
+      '',
+      'Warm regards,',
+      'Looks by Leema',
     ].join('\n'),
   };
 }

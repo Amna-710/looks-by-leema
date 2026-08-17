@@ -28,6 +28,7 @@ export default function Hero() {
           active={activeSlide}
           onActiveChange={setActiveSlide}
           advanceOnVideoEnd
+          showPoster={false}
         />
       </motion.div>
       <div className="hero__overlay" />

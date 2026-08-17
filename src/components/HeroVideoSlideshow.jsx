@@ -22,6 +22,7 @@ const HeroVideoSlideshow = forwardRef(function HeroVideoSlideshow(
     fallbackPoster = FALLBACK_POSTER,
     className = '',
     advanceOnVideoEnd = false,
+    showPoster = true,
   },
   ref,
 ) {
@@ -168,7 +169,7 @@ const HeroVideoSlideshow = forwardRef(function HeroVideoSlideshow(
               playsInline
               autoPlay={isActive}
               preload={index === 0 || isActive ? 'auto' : 'none'}
-              poster={fallbackPoster}
+              {...(showPoster ? { poster: fallbackPoster } : {})}
               onCanPlay={() => handleCanPlay(index)}
               onLoadedData={() => handleCanPlay(index)}
               onEnded={() => handleEnded(index)}
