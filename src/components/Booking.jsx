@@ -5,6 +5,14 @@ import { useServicesData } from '../hooks/useServicesData';
 import { createBooking } from '../services/firestoreService';
 import { isFirebaseConfigured, isRtdbConfigured } from '../firebase/config';
 import { MIN_BOOKING_MESSAGE, MIN_BOOKING_NOTICE } from '../config/booking';
+import {
+  ADVANCE_PAYMENT_LABEL,
+  ADVANCE_PAYMENT_AMOUNT,
+  PAYMENT_METHODS,
+  PAYMENT_STATUS,
+  ZELLE_RECIPIENT,
+  ZELLE_SUBMIT_INSTRUCTION,
+} from '../config/payment';
 import { meetsMinimumBooking } from '../utils/bookingValidation';
 import { fadeInUp } from '../utils/animations';
 import './Booking.css';
@@ -17,6 +25,7 @@ const initialForm = {
   date: '',
   time: '',
   message: '',
+  paymentMethod: PAYMENT_METHODS.CARD,
 };
 
 function getPreselectedService(location, searchParams) {
@@ -70,6 +79,10 @@ function validateForm(data, flatServices) {
     errors.time = 'Please select a time';
   }
 
+  if (!data.paymentMethod) {
+    errors.paymentMethod = 'Please select a payment method';
+  }
+
   return errors;
 }
 
@@ -90,6 +103,8 @@ export default function Booking() {
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [successPaymentMethod, setSuccessPaymentMethod] = useState(null);
+  const isZelle = form.paymentMethod === PAYMENT_METHODS.ZELLE;
 
   useEffect(() => {
     const preselected = getPreselectedService(location, searchParams);
@@ -104,6 +119,13 @@ export default function Booking() {
       setErrors((prev) => ({ ...prev, service: MIN_BOOKING_MESSAGE }));
     }
   }, [location, searchParams, flatServices]);
+
+  const handlePaymentMethodChange = (method) => {
+    setForm((prev) => ({ ...prev, paymentMethod: method }));
+    if (errors.paymentMethod) {
+      setErrors((prev) => ({ ...prev, paymentMethod: '' }));
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -132,14 +154,25 @@ export default function Booking() {
 
     try {
       const selectedService = flatServices.find((s) => s.value === form.service);
+      const isZellePayment = form.paymentMethod === PAYMENT_METHODS.ZELLE;
+
       await createBooking({
         ...form,
         serviceLabel: selectedService?.label || form.service,
         servicePrice: selectedService?.price,
+        paymentMethod: form.paymentMethod,
+        paymentStatus: isZellePayment
+          ? PAYMENT_STATUS.AWAITING_VERIFICATION
+          : PAYMENT_STATUS.NOT_REQUIRED,
+        advancePaymentAmount: isZellePayment ? ADVANCE_PAYMENT_AMOUNT : null,
       });
+      setSuccessPaymentMethod(form.paymentMethod);
       setSubmitted(true);
-      setForm(initialForm);
-      setTimeout(() => setSubmitted(false), 5000);
+      setForm({ ...initialForm, paymentMethod: PAYMENT_METHODS.CARD });
+      setTimeout(() => {
+        setSubmitted(false);
+        setSuccessPaymentMethod(null);
+      }, 5000);
     } catch (err) {
       setSubmitError(err.message || 'Failed to submit booking. Please try again.');
     } finally {
@@ -266,6 +299,86 @@ export default function Booking() {
               />
             </div>
 
+            <div className="form-group booking__payment">
+              <span className="booking__payment-label">Advance Payment *</span>
+              <p className="booking__payment-intro">
+                A {ADVANCE_PAYMENT_LABEL} advance payment is required to secure your appointment.
+              </p>
+              <div className="booking__payment-options" role="radiogroup" aria-label="Advance payment method">
+                <label
+                  className={`booking__payment-option${
+                    form.paymentMethod === PAYMENT_METHODS.CARD
+                      ? ' booking__payment-option--active'
+                      : ''
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value={PAYMENT_METHODS.CARD}
+                    checked={form.paymentMethod === PAYMENT_METHODS.CARD}
+                    onChange={() => handlePaymentMethodChange(PAYMENT_METHODS.CARD)}
+                  />
+                  <span className="booking__payment-option-body">
+                    <span className="booking__payment-option-title">Credit/Debit Card</span>
+                    <span className="booking__payment-option-desc">
+                      Pay the {ADVANCE_PAYMENT_LABEL} advance by card when we confirm your booking.
+                    </span>
+                  </span>
+                </label>
+
+                <label
+                  className={`booking__payment-option${
+                    form.paymentMethod === PAYMENT_METHODS.ZELLE
+                      ? ' booking__payment-option--active'
+                      : ''
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value={PAYMENT_METHODS.ZELLE}
+                    checked={form.paymentMethod === PAYMENT_METHODS.ZELLE}
+                    onChange={() => handlePaymentMethodChange(PAYMENT_METHODS.ZELLE)}
+                  />
+                  <span className="booking__payment-option-body">
+                    <span className="booking__payment-option-title">Zelle — Advance Payment</span>
+                    <span className="booking__payment-option-desc">
+                      Send {ADVANCE_PAYMENT_LABEL} via Zelle before your request is verified.
+                    </span>
+                  </span>
+                </label>
+              </div>
+              {errors.paymentMethod && (
+                <span className="form-error">{errors.paymentMethod}</span>
+              )}
+
+              {isZelle && (
+                <div className="booking__zelle-panel">
+                  <p className="booking__zelle-heading">Zelle Payment Instructions</p>
+                  <dl className="booking__zelle-details">
+                    <div className="booking__zelle-row">
+                      <dt>Advance payment</dt>
+                      <dd>{ADVANCE_PAYMENT_LABEL}</dd>
+                    </div>
+                    <div className="booking__zelle-row">
+                      <dt>Payment method</dt>
+                      <dd>Zelle</dd>
+                    </div>
+                    <div className="booking__zelle-row">
+                      <dt>Send to</dt>
+                      <dd>{ZELLE_RECIPIENT}</dd>
+                    </div>
+                  </dl>
+                  <p className="booking__zelle-note">{ZELLE_SUBMIT_INSTRUCTION}</p>
+                  <p className="booking__zelle-status-note">
+                    Your booking will be marked <strong>Payment Pending</strong> until we verify your
+                    Zelle payment.
+                  </p>
+                </div>
+              )}
+            </div>
+
             <p className="booking__notice">
               <strong>{MIN_BOOKING_NOTICE}</strong>
             </p>
@@ -282,7 +395,9 @@ export default function Booking() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                Thank you! We&apos;ll contact you shortly to confirm your appointment and deposit.
+                {successPaymentMethod === PAYMENT_METHODS.ZELLE
+                  ? `Thank you! Please send your ${ADVANCE_PAYMENT_LABEL} advance payment to ${ZELLE_RECIPIENT} via Zelle. Your booking is payment pending until we verify receipt.`
+                  : 'Thank you! We\'ll contact you shortly to confirm your appointment and deposit.'}
               </motion.p>
             )}
           </form>

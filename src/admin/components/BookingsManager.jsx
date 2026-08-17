@@ -4,6 +4,11 @@ import {
   confirmBooking,
   cancelBooking,
 } from '../../services/firestoreService';
+import {
+  PAYMENT_METHOD_LABELS,
+  PAYMENT_STATUS,
+  PAYMENT_STATUS_LABELS,
+} from '../../config/payment';
 
 const statusOptions = ['pending', 'confirmed', 'completed', 'cancelled'];
 
@@ -16,6 +21,20 @@ function formatDate(date) {
     hour: '2-digit',
     minute: '2-digit',
   });
+}
+
+function PaymentBadge({ paymentStatus }) {
+  if (!paymentStatus || paymentStatus === PAYMENT_STATUS.NOT_REQUIRED) return null;
+
+  const label = PAYMENT_STATUS_LABELS[paymentStatus] || paymentStatus;
+  const tone =
+    paymentStatus === PAYMENT_STATUS.AWAITING_VERIFICATION ? 'pending' : 'confirmed';
+
+  return (
+    <span className={`admin-badge admin-badge--${tone}`} style={{ marginTop: '0.35rem' }}>
+      {label}
+    </span>
+  );
 }
 
 function StatusBadge({ status }) {
@@ -144,6 +163,7 @@ export default function BookingsManager() {
                 <th>Contact</th>
                 <th>Service</th>
                 <th>Date & Time</th>
+                <th>Payment</th>
                 <th>Status</th>
                 <th>Email</th>
                 <th>Submitted</th>
@@ -166,6 +186,13 @@ export default function BookingsManager() {
                     <td>
                       {booking.date}<br />
                       <span className="admin-muted">{booking.time}</span>
+                    </td>
+                    <td>
+                      <div>{PAYMENT_METHOD_LABELS[booking.paymentMethod] || booking.paymentMethod || '—'}</div>
+                      {booking.advancePaymentAmount != null && (
+                        <div className="admin-muted">${booking.advancePaymentAmount} advance</div>
+                      )}
+                      <PaymentBadge paymentStatus={booking.paymentStatus} />
                     </td>
                     <td>
                       <StatusBadge status={booking.status} />
