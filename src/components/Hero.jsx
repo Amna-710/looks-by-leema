@@ -27,15 +27,13 @@ export default function Hero() {
           ref={slideshowRef}
           active={activeSlide}
           onActiveChange={setActiveSlide}
+          advanceOnVideoEnd
         />
       </motion.div>
       <div className="hero__overlay" />
       <HeroVideoDots
         active={activeSlide}
-        onSelect={(index) => {
-          slideshowRef.current?.goTo(index);
-          slideshowRef.current?.restartTimer();
-        }}
+        onSelect={(index) => slideshowRef.current?.goTo(index)}
       />
 
       <motion.div className="hero__content container" style={{ opacity }}>

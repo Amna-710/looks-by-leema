@@ -21,10 +21,10 @@ const HeroVideoSlideshow = forwardRef(function HeroVideoSlideshow(
     fadeMs = HERO_SLIDE_FADE_MS,
     fallbackPoster = FALLBACK_POSTER,
     className = '',
+    advanceOnVideoEnd = false,
   },
   ref,
 ) {
-  const [ready, setReady] = useState(() => new Set());
   const videoRefs = useRef([]);
   const timerRef = useRef(null);
   const activeRef = useRef(active);
@@ -45,38 +45,60 @@ const HeroVideoSlideshow = forwardRef(function HeroVideoSlideshow(
     goTo(activeRef.current + 1);
   }, [goTo]);
 
+  const playActiveVideo = useCallback(async (index = activeRef.current) => {
+    const video = videoRefs.current[index];
+    if (!video) return;
+
+    video.muted = true;
+    video.defaultMuted = true;
+
+    try {
+      await video.play();
+    } catch {
+      /* Autoplay may be blocked until media is ready — onCanPlay retries */
+    }
+  }, []);
+
   const restartTimer = useCallback(() => {
     clearInterval(timerRef.current);
-    if (slideCount < 2) return;
+    if (advanceOnVideoEnd || slideCount < 2) return;
     timerRef.current = setInterval(advance, slideIntervalMs);
-  }, [advance, slideCount, slideIntervalMs]);
+  }, [advance, advanceOnVideoEnd, slideCount, slideIntervalMs]);
 
-  useImperativeHandle(ref, () => ({ goTo, restartTimer }), [goTo, restartTimer]);
+  useImperativeHandle(ref, () => ({ goTo, restartTimer, playActiveVideo }), [
+    goTo,
+    restartTimer,
+    playActiveVideo,
+  ]);
 
   useEffect(() => {
     activeRef.current = active;
   }, [active]);
 
-  /* Auto-advance */
+  /* Interval advance (Services page) */
   useEffect(() => {
+    if (advanceOnVideoEnd) return undefined;
     restartTimer();
     return () => clearInterval(timerRef.current);
-  }, [restartTimer]);
+  }, [advanceOnVideoEnd, restartTimer]);
 
   /* Play active video; pause others */
   useEffect(() => {
     videoRefs.current.forEach((video, index) => {
       if (!video) return;
       if (index === active) {
-        const playPromise = video.play();
-        if (playPromise?.catch) {
-          playPromise.catch(() => {});
+        if (advanceOnVideoEnd) {
+          video.currentTime = 0;
         }
+        playActiveVideo(index);
       } else {
         video.pause();
+        if (advanceOnVideoEnd) {
+          video.currentTime = 0;
+        }
       }
     });
-  }, [active, ready]);
+  }, [active, advanceOnVideoEnd, playActiveVideo]);
 
   /* Preload next video */
   useEffect(() => {
@@ -88,14 +110,22 @@ const HeroVideoSlideshow = forwardRef(function HeroVideoSlideshow(
     }
   }, [active, slideCount]);
 
-  const handleCanPlay = useCallback((index) => {
-    setReady((prev) => {
-      if (prev.has(index)) return prev;
-      const next = new Set(prev);
-      next.add(index);
-      return next;
-    });
-  }, []);
+  const handleCanPlay = useCallback(
+    (index) => {
+      if (index === activeRef.current) {
+        playActiveVideo(index);
+      }
+    },
+    [playActiveVideo],
+  );
+
+  const handleEnded = useCallback(
+    (index) => {
+      if (!advanceOnVideoEnd || index !== activeRef.current) return;
+      advance();
+    },
+    [advance, advanceOnVideoEnd],
+  );
 
   if (slideCount === 0) {
     return (
@@ -125,16 +155,23 @@ const HeroVideoSlideshow = forwardRef(function HeroVideoSlideshow(
             <video
               ref={(el) => {
                 videoRefs.current[index] = el;
+                if (el && isActive) {
+                  el.muted = true;
+                  playActiveVideo(index);
+                }
               }}
               className="hero-video-slideshow__video"
               src={slide.src}
               muted
-              loop
+              defaultMuted
+              loop={!advanceOnVideoEnd}
               playsInline
-              autoPlay={index === 0}
-              preload={index === 0 ? 'auto' : 'none'}
+              autoPlay={isActive}
+              preload={index === 0 || isActive ? 'auto' : 'none'}
               poster={fallbackPoster}
               onCanPlay={() => handleCanPlay(index)}
+              onLoadedData={() => handleCanPlay(index)}
+              onEnded={() => handleEnded(index)}
             />
           </div>
         );
