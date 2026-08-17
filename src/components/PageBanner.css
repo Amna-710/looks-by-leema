@@ -44,6 +44,156 @@
   line-height: 1.7;
 }
 
+/* About page — full-cover hero image */
+.page-banner--hero-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(26rem, 54vw, 34rem);
+  padding: calc(var(--nav-height) + 4rem) 1.5rem 4rem;
+  background: #1a1214;
+  color: var(--white);
+  overflow: hidden;
+}
+
+.page-banner--hero-image .page-banner__media--cover {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.page-banner--hero-image .page-banner__media--cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 38%;
+  display: block;
+}
+
+.page-banner--hero-image .page-banner__overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(20, 12, 16, 0.52) 0%,
+    rgba(20, 12, 16, 0.38) 45%,
+    rgba(20, 12, 16, 0.6) 100%
+  );
+}
+
+.page-banner--hero-image .page-banner__content {
+  position: relative;
+  z-index: 2;
+}
+
+.page-banner--hero-image .page-banner__eyebrow {
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+}
+
+.page-banner--hero-image .page-banner__title {
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
+}
+
+.page-banner--hero-image .page-banner__desc {
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+}
+
+@media (max-width: 768px) {
+  .page-banner--hero-image {
+    min-height: clamp(22rem, 68vw, 28rem);
+    padding: calc(var(--nav-height) + 3.25rem) 1.25rem 3.25rem;
+  }
+
+  .page-banner--hero-image .page-banner__media--cover img {
+    object-position: center 42%;
+  }
+}
+
+/* Services page — video hero background */
+.page-banner--video {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(28rem, 56vw, 36rem);
+  padding: calc(var(--nav-height) + 4rem) 1.5rem 4rem;
+  background: #140c10;
+  color: var(--white);
+  overflow: hidden;
+}
+
+.page-banner--video .page-banner__media--video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.page-banner--video .page-banner__media--video .hero-video-slideshow {
+  position: absolute;
+  inset: 0;
+}
+
+.page-banner--video .hero-video-slideshow__slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #140c10;
+}
+
+.page-banner--video .hero-video-slideshow__video {
+  position: relative;
+  inset: unset;
+  top: auto;
+  left: auto;
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center center;
+}
+
+.page-banner--video .page-banner__overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(20, 12, 16, 0.55) 0%,
+    rgba(20, 12, 16, 0.4) 45%,
+    rgba(20, 12, 16, 0.62) 100%
+  );
+}
+
+.page-banner--video .page-banner__content {
+  position: relative;
+  z-index: 2;
+}
+
+.page-banner--video .page-banner__eyebrow {
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+}
+
+.page-banner--video .page-banner__title {
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
+}
+
+.page-banner--video .page-banner__desc {
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+}
+
+.hero-video-slideshow__dots--banner {
+  bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .page-banner--video {
+    min-height: clamp(22rem, 64vw, 28rem);
+    padding: calc(var(--nav-height) + 3.25rem) 1.25rem 3.25rem;
+  }
+
+  .hero-video-slideshow__dots--banner {
+    bottom: 1rem;
+  }
+}
+
 /* Booking page — showcase custom banner art clearly */
 .page-banner--booking {
   display: flex;

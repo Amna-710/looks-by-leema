@@ -10,10 +10,18 @@ const FALLBACK_POSTER = '/images/hero-background.png';
 
 /**
  * Full-width hero video slideshow — fast crossfade, muted autoplay.
- * Dots are rendered separately in Hero.jsx (above overlay) via HeroVideoDots.
+ * Dots are rendered separately via VideoSlideshowDots.
  */
 const HeroVideoSlideshow = forwardRef(function HeroVideoSlideshow(
-  { active, onActiveChange },
+  {
+    active,
+    onActiveChange,
+    videos = HERO_VIDEOS,
+    slideIntervalMs = HERO_SLIDE_INTERVAL_MS,
+    fadeMs = HERO_SLIDE_FADE_MS,
+    fallbackPoster = FALLBACK_POSTER,
+    className = '',
+  },
   ref,
 ) {
   const [ready, setReady] = useState(() => new Set());
@@ -21,7 +29,7 @@ const HeroVideoSlideshow = forwardRef(function HeroVideoSlideshow(
   const timerRef = useRef(null);
   const activeRef = useRef(active);
 
-  const slideCount = HERO_VIDEOS.length;
+  const slideCount = videos.length;
 
   const goTo = useCallback(
     (index) => {
@@ -40,8 +48,8 @@ const HeroVideoSlideshow = forwardRef(function HeroVideoSlideshow(
   const restartTimer = useCallback(() => {
     clearInterval(timerRef.current);
     if (slideCount < 2) return;
-    timerRef.current = setInterval(advance, HERO_SLIDE_INTERVAL_MS);
-  }, [advance, slideCount]);
+    timerRef.current = setInterval(advance, slideIntervalMs);
+  }, [advance, slideCount, slideIntervalMs]);
 
   useImperativeHandle(ref, () => ({ goTo, restartTimer }), [goTo, restartTimer]);
 
@@ -92,16 +100,19 @@ const HeroVideoSlideshow = forwardRef(function HeroVideoSlideshow(
   if (slideCount === 0) {
     return (
       <div
-        className="hero-video-slideshow hero-video-slideshow--fallback"
-        style={{ backgroundImage: `url(${FALLBACK_POSTER})` }}
+        className={`hero-video-slideshow hero-video-slideshow--fallback${className ? ` ${className}` : ''}`}
+        style={{ backgroundImage: `url(${fallbackPoster})` }}
         aria-hidden="true"
       />
     );
   }
 
   return (
-    <div className="hero-video-slideshow" aria-hidden="true">
-      {HERO_VIDEOS.map((slide, index) => {
+    <div
+      className={`hero-video-slideshow${className ? ` ${className}` : ''}`}
+      aria-hidden="true"
+    >
+      {videos.map((slide, index) => {
         const isActive = index === active;
         return (
           <div
@@ -109,7 +120,7 @@ const HeroVideoSlideshow = forwardRef(function HeroVideoSlideshow(
             className={`hero-video-slideshow__slide${
               isActive ? ' hero-video-slideshow__slide--active' : ''
             }`}
-            style={{ transitionDuration: `${HERO_SLIDE_FADE_MS}ms` }}
+            style={{ transitionDuration: `${fadeMs}ms` }}
           >
             <video
               ref={(el) => {
@@ -122,7 +133,7 @@ const HeroVideoSlideshow = forwardRef(function HeroVideoSlideshow(
               playsInline
               autoPlay={index === 0}
               preload={index === 0 ? 'auto' : 'none'}
-              poster={FALLBACK_POSTER}
+              poster={fallbackPoster}
               onCanPlay={() => handleCanPlay(index)}
             />
           </div>
@@ -132,12 +143,21 @@ const HeroVideoSlideshow = forwardRef(function HeroVideoSlideshow(
   );
 });
 
-export function HeroVideoDots({ active, onSelect }) {
-  if (HERO_VIDEOS.length < 2) return null;
+export function VideoSlideshowDots({
+  videos = HERO_VIDEOS,
+  active,
+  onSelect,
+  className = '',
+}) {
+  if (videos.length < 2) return null;
 
   return (
-    <div className="hero-video-slideshow__dots hero-video-slideshow__dots--front">
-      {HERO_VIDEOS.map((slide, index) => (
+    <div
+      className={`hero-video-slideshow__dots hero-video-slideshow__dots--front${
+        className ? ` ${className}` : ''
+      }`}
+    >
+      {videos.map((slide, index) => (
         <button
           key={slide.src}
           type="button"
@@ -151,6 +171,11 @@ export function HeroVideoDots({ active, onSelect }) {
       ))}
     </div>
   );
+}
+
+/** @deprecated Use VideoSlideshowDots */
+export function HeroVideoDots(props) {
+  return <VideoSlideshowDots {...props} />;
 }
 
 export default HeroVideoSlideshow;
