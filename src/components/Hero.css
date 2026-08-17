@@ -1,7 +1,7 @@
 .hero {
   position: relative;
-  min-height: 100vh;
-  min-height: 100dvh;
+  min-height: calc(100vh + 3.5rem);
+  min-height: calc(100dvh + 3.5rem);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,10 +12,8 @@
   position: absolute;
   inset: -8% 0 0 0;
   z-index: 0;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   will-change: transform;
+  overflow: hidden;
 }
 
 .hero__overlay {
