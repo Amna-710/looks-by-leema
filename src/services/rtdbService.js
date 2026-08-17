@@ -1,6 +1,8 @@
 import { ref, set, onValue, off, get, push, update } from 'firebase/database';
 import { rtdb, isRtdbConfigured } from '../firebase/config';
 import { defaultSiteSettings, defaultTestimonials } from '../data/defaultSiteSettings';
+import { allServicesFlat } from '../data/services';
+import { assertMinimumBooking } from '../utils/bookingValidation';
 import { notifyBookingEmail } from './bookingEmailService';
 
 const PATHS = {
@@ -114,13 +116,19 @@ export async function seedRtdbIfEmpty() {
 /** Create a customer booking in Realtime Database (no email on submit) */
 export async function createBooking(bookingData) {
   const db = requireRtdb();
-  const { serviceLabel, ...rest } = bookingData;
+  const { serviceLabel, service, ...rest } = bookingData;
+
+  const catalogService = allServicesFlat.find((s) => s.value === service);
+  const priceToCheck = bookingData.servicePrice || catalogService?.price;
+  assertMinimumBooking(priceToCheck);
+
   const bookingsRef = ref(db, PATHS.bookings);
   const newRef = push(bookingsRef);
   const now = Date.now();
 
   await set(newRef, {
     ...rest,
+    service,
     ...(serviceLabel ? { serviceLabel } : {}),
     status: 'pending',
     createdAt: now,

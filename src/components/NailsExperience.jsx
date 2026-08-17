@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { fadeInUp } from '../utils/animations';
+import LightboxImage from './LightboxImage';
 import './NailsExperience.css';
 
 /** Unique luxury nails page content — Nails route only (below hero) */
@@ -44,7 +45,7 @@ export default function NailsExperience({ services, gallery }) {
                   transition={{ delay: 0.05 }}
                 >
                   <div className="nails-service__media">
-                    <img
+                    <LightboxImage
                       src={item.image}
                       alt={item.name}
                       loading="lazy"
@@ -96,7 +97,14 @@ export default function NailsExperience({ services, gallery }) {
                   variants={fadeInUp}
                   transition={{ delay: index * 0.08 }}
                 >
-                  <img src={src} alt={`Nail look ${index + 1}`} loading="lazy" decoding="async" />
+                  <LightboxImage
+                    src={src}
+                    alt={`Nail look ${index + 1}`}
+                    loading="lazy"
+                    decoding="async"
+                    images={gallery}
+                    index={index}
+                  />
                 </motion.div>
               ))}
             </div>

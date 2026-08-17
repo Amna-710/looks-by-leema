@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useServicesData } from '../hooks/useServicesData';
 import { createBooking } from '../services/firestoreService';
 import { isFirebaseConfigured, isRtdbConfigured } from '../firebase/config';
+import { MIN_BOOKING_MESSAGE, MIN_BOOKING_NOTICE } from '../config/booking';
+import { meetsMinimumBooking } from '../utils/bookingValidation';
 import { fadeInUp } from '../utils/animations';
 import './Booking.css';
 
@@ -21,7 +23,7 @@ function getPreselectedService(location, searchParams) {
   return location.state?.service || searchParams.get('service') || '';
 }
 
-function validateForm(data) {
+function validateForm(data, flatServices) {
   const errors = {};
 
   if (!data.fullName.trim()) {
@@ -46,6 +48,11 @@ function validateForm(data) {
 
   if (!data.service) {
     errors.service = 'Please select a service';
+  } else {
+    const selected = flatServices.find((s) => s.value === data.service);
+    if (selected && !meetsMinimumBooking(selected.price)) {
+      errors.service = MIN_BOOKING_MESSAGE;
+    }
   }
 
   if (!data.date) {
@@ -71,6 +78,10 @@ export default function Booking() {
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const { flatServices } = useServicesData();
+  const bookableServices = useMemo(
+    () => flatServices.filter((s) => meetsMinimumBooking(s.price)),
+    [flatServices]
+  );
   const [form, setForm] = useState(() => ({
     ...initialForm,
     service: getPreselectedService(location, searchParams),
@@ -82,10 +93,17 @@ export default function Booking() {
 
   useEffect(() => {
     const preselected = getPreselectedService(location, searchParams);
-    if (preselected) {
+    if (!preselected) return;
+
+    const selected = flatServices.find((s) => s.value === preselected);
+    if (selected && meetsMinimumBooking(selected.price)) {
       setForm((prev) => ({ ...prev, service: preselected }));
+      setErrors((prev) => ({ ...prev, service: '' }));
+    } else if (selected) {
+      setForm((prev) => ({ ...prev, service: '' }));
+      setErrors((prev) => ({ ...prev, service: MIN_BOOKING_MESSAGE }));
     }
-  }, [location, searchParams]);
+  }, [location, searchParams, flatServices]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -97,7 +115,7 @@ export default function Booking() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const validationErrors = validateForm(form);
+    const validationErrors = validateForm(form, flatServices);
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -117,6 +135,7 @@ export default function Booking() {
       await createBooking({
         ...form,
         serviceLabel: selectedService?.label || form.service,
+        servicePrice: selectedService?.price,
       });
       setSubmitted(true);
       setForm(initialForm);
@@ -196,7 +215,7 @@ export default function Booking() {
                   className={errors.service ? 'form-input--error' : ''}
                 >
                   <option value="">Select a service</option>
-                  {flatServices.map((s) => (
+                  {bookableServices.map((s) => (
                     <option key={s.value} value={s.value}>
                       {s.label} — {s.price}
                     </option>
@@ -248,7 +267,7 @@ export default function Booking() {
             </div>
 
             <p className="booking__notice">
-              <strong>$10 non-refundable deposit required.</strong>
+              <strong>{MIN_BOOKING_NOTICE}</strong>
             </p>
 
             {submitError && <p className="form-error booking__submit-error">{submitError}</p>}

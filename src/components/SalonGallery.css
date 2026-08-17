@@ -17,14 +17,21 @@
   box-shadow: 0 12px 36px rgba(183, 110, 121, 0.15);
 }
 
-.salon-gallery__item img {
+.salon-gallery__item .lightbox-image-trigger {
+  width: 100%;
+  height: 100%;
+}
+
+.salon-gallery__item img,
+.salon-gallery__item .lightbox-image-trigger img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
 }
 
-.salon-gallery__item:hover img {
+.salon-gallery__item:hover img,
+.salon-gallery__item:hover .lightbox-image-trigger img {
   transform: scale(1.05);
 }
 

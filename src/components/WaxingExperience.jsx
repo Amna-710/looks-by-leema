@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { fadeInUp } from '../utils/animations';
+import LightboxImage from './LightboxImage';
 import './WaxingExperience.css';
 
 /** Unique luxury waxing page content — Waxing route only (below hero) */
@@ -44,7 +45,7 @@ export default function WaxingExperience({ services }) {
                   transition={{ delay: 0.05 }}
                 >
                   <div className="wax-service__media">
-                    <img
+                    <LightboxImage
                       src={item.image}
                       alt={item.name}
                       loading="lazy"

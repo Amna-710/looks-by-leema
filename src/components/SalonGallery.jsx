@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import SectionHeader from './SectionHeader';
+import LightboxImage from './LightboxImage';
 import { useGalleryData } from '../hooks/useGalleryData';
 import { staggerContainer, fadeInUp } from '../utils/animations';
 import './SalonGallery.css';
@@ -26,13 +27,19 @@ export default function SalonGallery() {
           whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
         >
-          {images.map((image) => (
+          {images.map((image, index) => (
             <motion.div
               key={image.id}
               className="salon-gallery__item"
               variants={fadeInUp}
             >
-              <img src={image.url} alt={image.fileName || 'Salon photo'} loading="lazy" />
+              <LightboxImage
+                src={image.url}
+                alt={image.fileName || 'Salon photo'}
+                loading="lazy"
+                images={images.map((img) => img.url)}
+                index={index}
+              />
             </motion.div>
           ))}
         </motion.div>

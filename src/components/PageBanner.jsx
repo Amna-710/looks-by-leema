@@ -3,10 +3,19 @@ import { fadeInUp } from '../utils/animations';
 import './PageBanner.css';
 
 /** Compact page header for inner routes */
-export default function PageBanner({ eyebrow, title, description }) {
+export default function PageBanner({ eyebrow, title, description, backgroundImage }) {
+  const isBookingBanner = Boolean(backgroundImage);
+
   return (
-    <section className="page-banner">
+    <section className={`page-banner${isBookingBanner ? ' page-banner--booking' : ''}`}>
+      {isBookingBanner && (
+        <div className="page-banner__media" aria-hidden="true">
+          <img src={backgroundImage} alt="" loading="eager" decoding="async" />
+        </div>
+      )}
+
       <div className="page-banner__overlay" />
+
       <motion.div
         className="page-banner__content container"
         initial="hidden"

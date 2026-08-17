@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { fadeInUp } from '../utils/animations';
+import LightboxImage from './LightboxImage';
 import './LashesExperience.css';
 
 /** Luxury lash studio layout — Lashes route only (below hero) */
@@ -41,7 +42,12 @@ export default function LashesExperience({ services }) {
               variants={fadeInUp}
             >
               <div className="lash-feature__media">
-                <img src={featured.image} alt={featured.title} loading="lazy" decoding="async" />
+                <LightboxImage
+                  src={featured.image}
+                  alt={featured.title}
+                  loading="lazy"
+                  decoding="async"
+                />
                 <div className="lash-feature__shade" />
                 <div className="lash-feature__copy">
                   <span className="lash-feature__label">{featured.label}</span>
@@ -67,7 +73,14 @@ export default function LashesExperience({ services }) {
                 transition={{ delay: (index % 4) * 0.08 }}
               >
                 <div className="lash-card__media">
-                  <img src={item.image} alt={item.title} loading="lazy" decoding="async" />
+                  <LightboxImage
+                    src={item.image}
+                    alt={item.title}
+                    loading="lazy"
+                    decoding="async"
+                    images={rest.map((entry) => entry.image)}
+                    index={index}
+                  />
                   <div className="lash-card__shade" />
                   <div className="lash-card__overlay">
                     <span className="lash-card__label">{item.label}</span>

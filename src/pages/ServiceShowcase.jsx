@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, useLocation, Navigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade, Pagination } from 'swiper/modules';
 import { getServiceShowcase } from '../data/serviceShowcases';
+import { useLightbox } from '../context/LightboxProvider';
+import LightboxImage from '../components/LightboxImage';
 import SoftGlamHeroBackground from '../components/SoftGlamHeroBackground';
 import FacialTreatments from '../components/FacialTreatments';
 import NailsExperience from '../components/NailsExperience';
@@ -30,7 +32,7 @@ export default function ServiceShowcasePage() {
   const { pathname } = useLocation();
   const slug = pathname.replace(/^\//, '').split('/')[0];
   const service = getServiceShowcase(slug);
-  const [lightboxIndex, setLightboxIndex] = useState(null);
+  const { openLightbox } = useLightbox();
   const isSoftGlam = slug === 'soft-glam';
   const isFacials = slug === 'facials';
   const isNails = slug === 'nails';
@@ -44,27 +46,6 @@ export default function ServiceShowcasePage() {
     if (!data?.gallery) return [];
     return slug === 'soft-glam' ? shuffleImages(data.gallery) : data.gallery;
   });
-
-  const closeLightbox = () => setLightboxIndex(null);
-
-  useEffect(() => {
-    if (lightboxIndex === null) return undefined;
-    const onKey = (e) => {
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowRight' && galleryImages.length) {
-        setLightboxIndex((i) => (i + 1) % galleryImages.length);
-      }
-      if (e.key === 'ArrowLeft' && galleryImages.length) {
-        setLightboxIndex((i) => (i - 1 + galleryImages.length) % galleryImages.length);
-      }
-    };
-    document.body.style.overflow = 'hidden';
-    window.addEventListener('keydown', onKey);
-    return () => {
-      document.body.style.overflow = '';
-      window.removeEventListener('keydown', onKey);
-    };
-  }, [lightboxIndex, galleryImages]);
 
   if (!service) {
     return <Navigate to="/about" replace />;
@@ -184,7 +165,14 @@ export default function ServiceShowcasePage() {
                     type="button"
                     key={`${src}-${index}`}
                     className={`svc-gallery__item svc-gallery__item--${(index % 6) + 1}`}
-                    onClick={() => setLightboxIndex(index)}
+                    onClick={() =>
+                      openLightbox({
+                        src: galleryImages[index],
+                        alt: `${service.title} gallery ${index + 1}`,
+                        images: galleryImages,
+                        index,
+                      })
+                    }
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, margin: '-40px' }}
@@ -221,7 +209,11 @@ export default function ServiceShowcasePage() {
                     viewport={{ once: true, margin: '-60px' }}
                     variants={fadeInUp}
                   >
-                    <img src={section.image} alt={section.title} loading="lazy" />
+                    <LightboxImage
+                      src={section.image}
+                      alt={section.title}
+                      loading="lazy"
+                    />
                   </motion.div>
                   <motion.div
                     className="svc-feature__content"
@@ -267,62 +259,6 @@ export default function ServiceShowcasePage() {
           </motion.div>
         </div>
       </section>
-
-      {/* Lightbox */}
-      <AnimatePresence>
-        {lightboxIndex !== null && (
-          <motion.div
-            className="svc-lightbox"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={closeLightbox}
-            role="dialog"
-            aria-modal="true"
-            aria-label={`${service.title} image gallery`}
-          >
-            <button type="button" className="svc-lightbox__close" onClick={closeLightbox} aria-label="Close">
-              ×
-            </button>
-            <button
-              type="button"
-              className="svc-lightbox__nav svc-lightbox__nav--prev"
-              onClick={(e) => {
-                e.stopPropagation();
-                setLightboxIndex((i) => (i - 1 + galleryImages.length) % galleryImages.length);
-              }}
-              aria-label="Previous image"
-            >
-              ‹
-            </button>
-            <motion.img
-              key={galleryImages[lightboxIndex]}
-              src={galleryImages[lightboxIndex]}
-              alt={`${service.title} ${lightboxIndex + 1}`}
-              className="svc-lightbox__img"
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              onClick={(e) => e.stopPropagation()}
-            />
-            <button
-              type="button"
-              className="svc-lightbox__nav svc-lightbox__nav--next"
-              onClick={(e) => {
-                e.stopPropagation();
-                setLightboxIndex((i) => (i + 1) % galleryImages.length);
-              }}
-              aria-label="Next image"
-            >
-              ›
-            </button>
-            <p className="svc-lightbox__counter">
-              {lightboxIndex + 1} / {galleryImages.length}
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }

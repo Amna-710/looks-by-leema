@@ -29,8 +29,7 @@ export const defaultSiteSettings = {
     founderName: 'Haleema',
     founderBio:
       'Haleema founded LooksByLeema Beauty Studio with a simple vision: create a space where every woman feels seen, celebrated, and beautiful in her own skin. With years of experience in makeup artistry, skincare, and beauty services, she brings passion, precision, and a personal touch to every client.',
-    founderImageUrl:
-      'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=600&q=80',
+    founderImageUrl: '/images/about-founder.jpg',
     philosophy:
       'We believe beauty should feel effortless, not overwhelming. Our philosophy centers on enhancing what makes you uniquely you — never masking it.',
     mission:

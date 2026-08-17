@@ -137,7 +137,13 @@
   overflow: hidden;
 }
 
-.service-portfolio-card__image {
+.service-portfolio-card__media .lightbox-image-trigger {
+  width: 100%;
+  height: 100%;
+}
+
+.service-portfolio-card__image,
+.service-portfolio-card__media .lightbox-image-trigger img {
   width: 100%;
   height: 100%;
   object-fit: cover;

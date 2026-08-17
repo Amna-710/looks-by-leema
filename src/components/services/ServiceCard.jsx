@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { fadeInUp } from '../../utils/animations';
+import LightboxImage from '../LightboxImage';
 import './ServicesBrowse.css';
 
 /** Reusable portfolio-style service card — image, name, price, book action */
@@ -17,7 +18,7 @@ export default function ServiceCard({ service, categoryLabel }) {
   return (
     <motion.article className="service-portfolio-card" variants={fadeInUp}>
       <div className="service-portfolio-card__media">
-        <img
+        <LightboxImage
           src={service.image}
           alt={service.name}
           className="service-portfolio-card__image"

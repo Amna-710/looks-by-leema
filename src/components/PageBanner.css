@@ -43,3 +43,86 @@
   opacity: 0.9;
   line-height: 1.7;
 }
+
+/* Booking page — showcase custom banner art clearly */
+.page-banner--booking {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: clamp(22rem, 52vw, 28rem);
+  padding: calc(var(--nav-height) + 1.25rem) 1.5rem 2.75rem;
+  background: linear-gradient(180deg, #fdf8f9 0%, #f9eef1 48%, #f5e4e9 100%);
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+.page-banner--booking .page-banner__media {
+  position: absolute;
+  inset: calc(var(--nav-height) + 0.5rem) 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  height: clamp(11.75rem, 36vw, 17.5rem);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.page-banner--booking .page-banner__media img {
+  width: min(90vw, 28rem);
+  height: 100%;
+  object-fit: contain;
+  object-position: center top;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+.page-banner--booking .page-banner__overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(253, 248, 249, 0.05) 0%,
+    rgba(253, 248, 249, 0.35) 42%,
+    rgba(245, 228, 233, 0.82) 72%,
+    rgba(245, 228, 233, 0.94) 100%
+  );
+}
+
+.page-banner--booking .page-banner__content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding-top: clamp(9.5rem, 30vw, 13.5rem);
+}
+
+.page-banner--booking .page-banner__eyebrow {
+  color: var(--rose-gold);
+  opacity: 1;
+}
+
+.page-banner--booking .page-banner__title {
+  color: var(--text-primary);
+  text-shadow: 0 1px 18px rgba(255, 255, 255, 0.65);
+}
+
+.page-banner--booking .page-banner__desc {
+  color: var(--text-secondary);
+  opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .page-banner--booking {
+    min-height: clamp(20rem, 78vw, 24rem);
+    padding-bottom: 2.25rem;
+  }
+
+  .page-banner--booking .page-banner__media {
+    height: clamp(10rem, 44vw, 14rem);
+  }
+
+  .page-banner--booking .page-banner__media img {
+    width: min(94vw, 21.5rem);
+  }
+
+  .page-banner--booking .page-banner__content {
+    padding-top: clamp(8.5rem, 36vw, 11.5rem);
+  }
+}

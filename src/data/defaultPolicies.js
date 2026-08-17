@@ -5,7 +5,7 @@ export const defaultPolicies = [
     icon: '📅',
     items: [
       'Online appointments only',
-      '$10 non-refundable deposit required',
+      '$50 minimum booking amount',
       'Remaining payment after service',
     ],
   },

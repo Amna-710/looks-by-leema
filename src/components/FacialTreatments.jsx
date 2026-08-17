@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { fadeInUp } from '../utils/animations';
+import LightboxImage from './LightboxImage';
 import './FacialTreatments.css';
 
 /** Premium facial treatment cards — Facials page only (below hero) */
@@ -37,7 +38,7 @@ export default function FacialTreatments({ treatments }) {
                 transition={{ delay: index * 0.1 }}
               >
                 <div className="facial-card__media">
-                  <img
+                  <LightboxImage
                     src={treatment.image}
                     alt={treatment.name}
                     loading="lazy"

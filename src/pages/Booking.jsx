@@ -1,6 +1,8 @@
 import PageBanner from '../components/PageBanner';
 import Booking from '../components/Booking';
 
+const BOOKING_BANNER_IMAGE = '/images/booking-banner.jpg';
+
 /** Booking page — appointment request form */
 export default function BookingPage() {
   return (
@@ -8,7 +10,8 @@ export default function BookingPage() {
       <PageBanner
         eyebrow="Reserve Your Spot"
         title="Book an Appointment"
-        description="$10 non-refundable deposit required."
+        description="$50 minimum booking amount applies to all appointments."
+        backgroundImage={BOOKING_BANNER_IMAGE}
       />
       <Booking />
     </>

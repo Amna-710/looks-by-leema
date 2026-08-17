@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useSiteSettings } from '../hooks/useSiteSettings';
+import LightboxImage from './LightboxImage';
 import WhyChooseUs from './WhyChooseUs';
 import { TAG_TO_PATH } from '../data/serviceShowcases';
 import { fadeInUp } from '../utils/animations';
 import './About.css';
 
 const ABOUT_STUDIO_IMAGE = '/images/about-studio.png';
+const FOUNDER_IMAGE = '/images/about-founder.jpg';
 
 /** About page content loaded from Firebase */
 export default function About() {
@@ -29,7 +31,7 @@ export default function About() {
               variants={fadeInUp}
             >
               {!studioImgFailed ? (
-                <img
+                <LightboxImage
                   src={ABOUT_STUDIO_IMAGE}
                   alt="LooksByLeema Beauty Studio interior"
                   loading="lazy"
@@ -97,10 +99,10 @@ export default function About() {
               variants={fadeInUp}
               transition={{ delay: 0.15 }}
             >
-              {!founderImgFailed && about.founderImageUrl ? (
-                <img
-                  src={about.founderImageUrl}
-                  alt={`${about.founderName}, founder of LooksByLeema Beauty Studio`}
+              {!founderImgFailed ? (
+                <LightboxImage
+                  src={FOUNDER_IMAGE}
+                  alt="Leema — Founder of Looks by Leema"
                   loading="lazy"
                   onError={() => setFounderImgFailed(true)}
                 />

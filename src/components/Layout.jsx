@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
+import { LightboxProvider } from '../context/LightboxProvider';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import ScrollToTop from './ScrollToTop';
@@ -13,13 +14,13 @@ export default function Layout() {
   }, [pathname]);
 
   return (
-    <>
+    <LightboxProvider>
       <Navbar />
       <main className="main-content">
         <Outlet />
       </main>
       <Footer />
       <ScrollToTop />
-    </>
+    </LightboxProvider>
   );
 }
