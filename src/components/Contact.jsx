@@ -39,6 +39,14 @@ export default function Contact() {
   ].filter((s) => s.href);
 
   const phoneDigits = contact.phone?.replace(/\D/g, '') || '';
+  const telHref =
+    phoneDigits.length === 11 && phoneDigits.startsWith('1')
+      ? `tel:+${phoneDigits}`
+      : phoneDigits.length === 10
+        ? `tel:+1${phoneDigits}`
+        : phoneDigits
+          ? `tel:+${phoneDigits}`
+          : '';
 
   return (
     <section className="contact section section--compact">
@@ -88,7 +96,7 @@ export default function Contact() {
               <div>
                 <h3>Phone</h3>
                 <p>
-                  <a href={`tel:+1${phoneDigits}`}>{contact.phone}</a>
+                  <a href={telHref}>{contact.phone}</a>
                 </p>
               </div>
             </motion.div>

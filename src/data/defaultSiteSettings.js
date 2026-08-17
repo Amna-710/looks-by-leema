@@ -15,7 +15,7 @@ export const defaultSiteSettings = {
   contact: {
     location: 'Queens, NY',
     email: 'looksbyleema@gmail.com',
-    phone: '(555) 123-4567',
+    phone: '+1 347 888 3225',
     instagram: 'https://instagram.com',
     facebook: 'https://facebook.com',
     tiktok: 'https://tiktok.com',

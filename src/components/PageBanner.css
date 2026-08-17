@@ -149,6 +149,27 @@
   }
 }
 
+/* Contact page — centered brand logo hero */
+.page-banner--hero-image-contact .page-banner__media--cover img {
+  object-fit: cover;
+  object-position: center center;
+}
+
+.page-banner--hero-image-contact .page-banner__overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(20, 12, 16, 0.55) 0%,
+    rgba(20, 12, 16, 0.45) 45%,
+    rgba(20, 12, 16, 0.62) 100%
+  );
+}
+
+@media (max-width: 768px) {
+  .page-banner--hero-image-contact .page-banner__media--cover img {
+    object-position: center center;
+  }
+}
+
 /* Services page — video hero background */
 .page-banner--video {
   display: flex;

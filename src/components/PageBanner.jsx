@@ -136,3 +136,16 @@ export function BookingPageBanner(props) {
     />
   );
 }
+
+const CONTACT_HERO_IMAGE = '/images/contact-hero.png';
+
+/** Contact page banner with full-cover hero image */
+export function ContactPageBanner(props) {
+  return (
+    <PageBanner
+      {...props}
+      heroImage={CONTACT_HERO_IMAGE}
+      heroImageClassName="page-banner--hero-image-contact"
+    />
+  );
+}
