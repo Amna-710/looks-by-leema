@@ -123,3 +123,16 @@ export function PoliciesPageBanner(props) {
     />
   );
 }
+
+const BOOKING_HERO_IMAGE = '/images/booking-hero.jpg';
+
+/** Booking page banner with full-cover hero image */
+export function BookingPageBanner(props) {
+  return (
+    <PageBanner
+      {...props}
+      heroImage={BOOKING_HERO_IMAGE}
+      heroImageClassName="page-banner--hero-image-booking"
+    />
+  );
+}
