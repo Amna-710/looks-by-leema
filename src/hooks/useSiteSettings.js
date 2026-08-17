@@ -2,13 +2,17 @@ import { useEffect, useState } from 'react';
 import { subscribeSiteSettings } from '../services/firestoreService';
 import { subscribeRtdbSettings } from '../services/rtdbService';
 import { defaultSiteSettings } from '../data/defaultSiteSettings';
+import { normalizeContactFields } from '../data/contactInfo';
 import { isRtdbConfigured } from '../firebase/config';
 
 function mergeSettings(data) {
   return {
     hero: { ...defaultSiteSettings.hero, ...data?.hero },
     welcome: { ...defaultSiteSettings.welcome, ...data?.welcome },
-    contact: { ...defaultSiteSettings.contact, ...data?.contact },
+    contact: normalizeContactFields({
+      ...defaultSiteSettings.contact,
+      ...data?.contact,
+    }),
     about: { ...defaultSiteSettings.about, ...data?.about },
   };
 }

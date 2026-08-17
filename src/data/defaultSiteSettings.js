@@ -1,4 +1,6 @@
 /** Default site content — seeded to Firestore & Realtime Database */
+import { CONTACT_EMAIL, CONTACT_PHONE } from './contactInfo';
+
 export const defaultSiteSettings = {
   hero: {
     location: 'Queens, New York',
@@ -14,8 +16,8 @@ export const defaultSiteSettings = {
   },
   contact: {
     location: 'Queens, NY',
-    email: 'looksbyleema@gmail.com',
-    phone: '+1 347 888 3225',
+    email: CONTACT_EMAIL,
+    phone: CONTACT_PHONE,
     instagram: 'https://instagram.com',
     facebook: 'https://facebook.com',
     tiktok: 'https://tiktok.com',

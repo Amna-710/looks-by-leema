@@ -1,5 +1,11 @@
 import { motion } from 'framer-motion';
 import { useSiteSettings } from '../hooks/useSiteSettings';
+import {
+  CONTACT_EMAIL,
+  CONTACT_MAILTO,
+  CONTACT_PHONE,
+  CONTACT_TEL,
+} from '../data/contactInfo';
 import { staggerContainer, fadeInUp } from '../utils/animations';
 import './Contact.css';
 
@@ -38,16 +44,6 @@ export default function Contact() {
     { name: 'TikTok', href: contact.tiktok },
   ].filter((s) => s.href);
 
-  const phoneDigits = contact.phone?.replace(/\D/g, '') || '';
-  const telHref =
-    phoneDigits.length === 11 && phoneDigits.startsWith('1')
-      ? `tel:+${phoneDigits}`
-      : phoneDigits.length === 10
-        ? `tel:+1${phoneDigits}`
-        : phoneDigits
-          ? `tel:+${phoneDigits}`
-          : '';
-
   return (
     <section className="contact section section--compact">
       <div className="container">
@@ -82,7 +78,7 @@ export default function Contact() {
               <div>
                 <h3>Email</h3>
                 <p>
-                  <a href={`mailto:${contact.email}`}>{contact.email}</a>
+                  <a href={CONTACT_MAILTO}>{CONTACT_EMAIL}</a>
                 </p>
               </div>
             </motion.div>
@@ -96,7 +92,7 @@ export default function Contact() {
               <div>
                 <h3>Phone</h3>
                 <p>
-                  <a href={telHref}>{contact.phone}</a>
+                  <a href={CONTACT_TEL}>{CONTACT_PHONE}</a>
                 </p>
               </div>
             </motion.div>
