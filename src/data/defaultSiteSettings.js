@@ -1,5 +1,11 @@
 /** Default site content — seeded to Firestore & Realtime Database */
-import { CONTACT_EMAIL, CONTACT_PHONE } from './contactInfo';
+import {
+  CONTACT_EMAIL,
+  CONTACT_PHONE,
+  SOCIAL_INSTAGRAM_URL,
+  SOCIAL_TIKTOK_URL,
+  SOCIAL_YOUTUBE_URL,
+} from './contactInfo';
 
 export const defaultSiteSettings = {
   hero: {
@@ -18,9 +24,9 @@ export const defaultSiteSettings = {
     location: 'Queens, NY',
     email: CONTACT_EMAIL,
     phone: CONTACT_PHONE,
-    instagram: 'https://instagram.com',
-    facebook: 'https://facebook.com',
-    tiktok: 'https://tiktok.com',
+    instagram: SOCIAL_INSTAGRAM_URL,
+    tiktok: SOCIAL_TIKTOK_URL,
+    youtube: SOCIAL_YOUTUBE_URL,
     mapEmbedUrl:
       'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d96717.28361985928!2d-73.87248005!3d40.7282239!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25f21e91f9355%3A0x860bb7c86d1efd4b!2sQueens%2C%20NY!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus',
   },

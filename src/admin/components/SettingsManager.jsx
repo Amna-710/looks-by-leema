@@ -74,7 +74,7 @@ export default function SettingsManager() {
             <label>Email<input value={data.contact.email} onChange={(e) => update('contact', 'email', e.target.value)} /></label>
             <label>Phone<input value={data.contact.phone} onChange={(e) => update('contact', 'phone', e.target.value)} /></label>
             <label>Instagram URL<input value={data.contact.instagram} onChange={(e) => update('contact', 'instagram', e.target.value)} /></label>
-            <label>Facebook URL<input value={data.contact.facebook} onChange={(e) => update('contact', 'facebook', e.target.value)} /></label>
+            <label>YouTube URL<input value={data.contact.youtube || ''} onChange={(e) => update('contact', 'youtube', e.target.value)} /></label>
             <label>TikTok URL<input value={data.contact.tiktok} onChange={(e) => update('contact', 'tiktok', e.target.value)} /></label>
           </div>
         </section>

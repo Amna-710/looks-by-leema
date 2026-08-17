@@ -5,6 +5,7 @@ import {
   CONTACT_MAILTO,
   CONTACT_PHONE,
   CONTACT_TEL,
+  CONTACT_SOCIAL_LINKS,
 } from '../data/contactInfo';
 import { staggerContainer, fadeInUp } from '../utils/animations';
 import './Contact.css';
@@ -19,10 +20,11 @@ const SocialIcon = ({ name }) => {
       </svg>
     );
   }
-  if (name === 'Facebook') {
+  if (name === 'YouTube') {
     return (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+        <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.42a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.13C5.12 19.56 12 19.56 12 19.56s6.88 0 8.6-.43a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.46z" />
+        <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor" stroke="none" />
       </svg>
     );
   }
@@ -38,11 +40,7 @@ export default function Contact() {
   const { settings } = useSiteSettings();
   const { contact } = settings;
 
-  const socialLinks = [
-    { name: 'Instagram', href: contact.instagram },
-    { name: 'Facebook', href: contact.facebook },
-    { name: 'TikTok', href: contact.tiktok },
-  ].filter((s) => s.href);
+  const socialLinks = CONTACT_SOCIAL_LINKS;
 
   return (
     <section className="contact section section--compact">
