@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import BookServiceLink from './BookServiceLink';
 import { fadeInUp } from '../utils/animations';
 import LightboxImage from './LightboxImage';
 import './FacialTreatments.css';
@@ -53,9 +53,12 @@ export default function FacialTreatments({ treatments }) {
                       <li key={benefit}>{benefit}</li>
                     ))}
                   </ul>
-                  <Link to="/booking" className="btn btn--primary btn--sm facial-card__btn">
+                  <BookServiceLink
+                    serviceValue={treatment.bookingService}
+                    className="btn btn--primary btn--sm facial-card__btn"
+                  >
                     Book This Facial
-                  </Link>
+                  </BookServiceLink>
                 </div>
               </motion.article>
             ))}

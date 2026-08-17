@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import BookServiceLink from './BookServiceLink';
 import { fadeInUp } from '../utils/animations';
 import LightboxImage from './LightboxImage';
 import './WaxingExperience.css';
@@ -62,9 +62,12 @@ export default function WaxingExperience({ services }) {
                         <li key={benefit}>{benefit}</li>
                       ))}
                     </ul>
-                    <Link to="/booking" className="btn btn--primary btn--sm">
+                    <BookServiceLink
+                      serviceValue={item.bookingService}
+                      className="btn btn--primary btn--sm"
+                    >
                       Book {item.name}
-                    </Link>
+                    </BookServiceLink>
                   </div>
                 </motion.article>
               );

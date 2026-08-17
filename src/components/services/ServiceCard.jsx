@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { buildBookingPath } from '../../utils/bookingNavigation';
 import { motion } from 'framer-motion';
 import { fadeInUp } from '../../utils/animations';
 import LightboxImage from '../LightboxImage';
@@ -10,7 +11,7 @@ export default function ServiceCard({ service, categoryLabel }) {
 
   const handleBook = () => {
     if (!service?.value) return;
-    navigate(`/booking?service=${encodeURIComponent(service.value)}`, {
+    navigate(buildBookingPath(service.value), {
       state: { service: service.value },
     });
   };

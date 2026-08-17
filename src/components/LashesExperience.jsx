@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import BookServiceLink from './BookServiceLink';
 import { fadeInUp } from '../utils/animations';
 import LightboxImage from './LightboxImage';
 import './LashesExperience.css';
@@ -53,9 +53,12 @@ export default function LashesExperience({ services }) {
                   <span className="lash-feature__label">{featured.label}</span>
                   <h3 className="lash-feature__title">{featured.title}</h3>
                   <p className="lash-feature__desc">{featured.description}</p>
-                  <Link to="/booking" className="btn btn--primary btn--sm">
+                  <BookServiceLink
+                    serviceValue={featured.bookingService}
+                    className="btn btn--primary btn--sm"
+                  >
                     Book Lashes
-                  </Link>
+                  </BookServiceLink>
                 </div>
               </div>
             </motion.article>
@@ -88,9 +91,12 @@ export default function LashesExperience({ services }) {
                   </div>
                 </div>
                 <p className="lash-card__desc">{item.description}</p>
-                <Link to="/booking" className="lash-card__link">
+                <BookServiceLink
+                  serviceValue={item.bookingService}
+                  className="lash-card__link"
+                >
                   Book this look →
-                </Link>
+                </BookServiceLink>
               </motion.article>
             ))}
           </div>

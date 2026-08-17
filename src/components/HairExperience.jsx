@@ -1,11 +1,11 @@
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import BookServiceLink from './BookServiceLink';
 import { fadeInUp } from '../utils/animations';
 import LightboxImage from './LightboxImage';
 import './HairExperience.css';
 
 /** Hairstyle services + lookbook — Hair route only (below hero) */
-export default function HairExperience({ services, lookbook }) {
+export default function HairExperience({ services, lookbook, bookingService }) {
   if (!services?.length) return null;
 
   const lookbookImages = lookbook?.map((style) => style.image) || [];
@@ -59,9 +59,12 @@ export default function HairExperience({ services, lookbook }) {
                     <span className="hair-service__label">{item.label}</span>
                     <h3 className="hair-service__name">{item.name}</h3>
                     <p className="hair-service__desc">{item.description}</p>
-                    <Link to="/booking" className="btn btn--primary btn--sm">
+                    <BookServiceLink
+                      serviceValue={item.bookingService}
+                      className="btn btn--primary btn--sm"
+                    >
                       Book {item.name}
-                    </Link>
+                    </BookServiceLink>
                   </div>
                 </motion.article>
               );
@@ -133,9 +136,12 @@ export default function HairExperience({ services, lookbook }) {
               variants={fadeInUp}
             >
               <p>Love a look? Book your styling appointment and we&apos;ll bring it to life.</p>
-              <Link to="/booking" className="btn btn--primary">
+              <BookServiceLink
+                serviceValue={bookingService}
+                className="btn btn--primary"
+              >
                 Book Hair Styling
-              </Link>
+              </BookServiceLink>
             </motion.div>
           </div>
         </section>

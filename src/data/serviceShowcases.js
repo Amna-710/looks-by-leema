@@ -5,12 +5,16 @@
 
 const img = (slug, name) => `/images/services/${slug}/${name}`;
 
+/** Booking form value: `{categoryId}:{serviceName}` */
+const book = (categoryId, serviceName) => `${categoryId}:${serviceName}`;
+
 export const SERVICE_SHOWCASES = {
   'soft-glam': {
     slug: 'soft-glam',
     tag: 'Soft Glam',
     title: 'Soft Glam',
     eyebrow: 'Makeup Artistry',
+    bookingService: book('makeup', 'Soft Glam'),
     description:
       'Effortless radiance for everyday elegance and special moments — soft definition, luminous skin, and a finish that feels like you, elevated.',
     heroImages: [
@@ -31,11 +35,13 @@ export const SERVICE_SHOWCASES = {
         title: 'Natural. Polished. Timeless.',
         text: 'Our soft glam look enhances your features with a light hand — glowing complexion, softly blended eyes, and a refined lip that photographs beautifully and lasts through the day.',
         image: img('soft-glam', 'gallery-1.png'),
+        bookingService: book('makeup', 'Soft Glam'),
       },
       {
         title: 'Perfect for every occasion',
         text: 'From brunches and date nights to bridal trials and events, soft glam is designed to feel luxurious without looking overdone — so you can move through your day with confidence.',
         image: img('soft-glam', 'gallery-2.png'),
+        bookingService: book('makeup', 'Full Glam'),
       },
     ],
   },
@@ -44,6 +50,7 @@ export const SERVICE_SHOWCASES = {
     tag: 'Facials',
     title: 'Facials',
     eyebrow: 'Skincare Rituals',
+    bookingService: book('facials', 'Hydrating Facial'),
     description:
       'Rejuvenating facial treatments that restore clarity, hydration, and a healthy glow — tailored to your skin in a calm, private studio setting.',
     heroImages: [img('facials', 'hero-background.png')],
@@ -58,6 +65,7 @@ export const SERVICE_SHOWCASES = {
         id: 'anti-aging',
         name: 'Anti-Aging Facial',
         image: img('facials', 'anti-aging.png'),
+        bookingService: book('facials', 'Anti-Aging Facial'),
         description:
           'A restorative ritual designed to soften visible signs of aging and revive the skin\'s natural radiance with gentle, nourishing care.',
         benefits: [
@@ -70,6 +78,7 @@ export const SERVICE_SHOWCASES = {
         id: 'hydrating',
         name: 'Hydrating Facial',
         image: img('facials', 'hydrating.png'),
+        bookingService: book('facials', 'Hydrating Facial'),
         description:
           'A deeply moisturizing treatment that replenishes thirsty skin — leaving it soft, balanced, and beautifully refreshed.',
         benefits: [
@@ -82,6 +91,7 @@ export const SERVICE_SHOWCASES = {
         id: 'acne',
         name: 'Acne Facial',
         image: img('facials', 'acne.png'),
+        bookingService: book('facials', 'Acne Treatment Facial'),
         description:
           'A clarifying treatment focused on cleaner pores and calmer skin — helping you feel more confident in your complexion.',
         benefits: [
@@ -109,6 +119,7 @@ export const SERVICE_SHOWCASES = {
     tag: 'Waxing',
     title: 'Waxing',
     eyebrow: 'Luxury Smooth Skin',
+    bookingService: book('waxing', 'Full Face'),
     description:
       'Gentle, precise waxing in a calm private studio — silky-smooth results with a clean, polished finish that feels fresh and refined.',
     heroImages: [img('waxing', 'hero.png')],
@@ -119,6 +130,7 @@ export const SERVICE_SHOWCASES = {
         label: 'Facial Softness',
         name: 'Face Wax',
         image: img('waxing', 'face.png'),
+        bookingService: book('waxing', 'Full Face'),
         description:
           'Achieve smooth, radiant skin with our gentle face waxing service. Designed to remove unwanted facial hair while leaving your skin soft, refreshed, and beautifully polished.',
         benefits: [
@@ -132,6 +144,7 @@ export const SERVICE_SHOWCASES = {
         label: 'Brow Definition',
         name: 'Eyebrow Wax',
         image: img('waxing', 'eyebrow.png'),
+        bookingService: book('waxing', 'Eyebrows'),
         description:
           'Perfectly shaped brows that enhance your natural beauty. Our eyebrow waxing service creates a clean, defined look with a precise and elegant finish.',
         benefits: [
@@ -145,6 +158,7 @@ export const SERVICE_SHOWCASES = {
         label: 'Silky Finish',
         name: 'Legs Wax',
         image: img('waxing', 'legs.png'),
+        bookingService: book('waxing', 'Full Legs'),
         description:
           'Enjoy silky-smooth legs with our professional waxing treatment. Experience soft, hair-free skin with a luxurious salon finish.',
         benefits: [
@@ -158,6 +172,7 @@ export const SERVICE_SHOWCASES = {
         label: 'Confident Softness',
         name: 'Arms Wax',
         image: img('waxing', 'arms.png'),
+        bookingService: book('waxing', 'Full Arms'),
         description:
           'Get beautifully smooth and confident-looking arms with our gentle waxing treatment. Designed for a clean, flawless, and comfortable experience.',
         benefits: [
@@ -174,6 +189,7 @@ export const SERVICE_SHOWCASES = {
     tag: 'Hair',
     title: 'Hair',
     eyebrow: 'Hair Styling',
+    bookingService: book('hair', 'Blowout'),
     description:
       'Elegant hair services crafted to complement your look — from polished styling to glamorous finishing touches that feel luxurious and wearable.',
     heroImages: [
@@ -188,6 +204,7 @@ export const SERVICE_SHOWCASES = {
         label: 'Precision Style',
         name: 'Haircut',
         image: img('hair', 'haircut.png'),
+        bookingService: book('hair', "Women's Haircut"),
         description:
           'Transform your look with our professional haircut service, designed to enhance your features and create a style that matches your personality. Our expert stylists provide precision cuts with a flawless finish.',
       },
@@ -196,6 +213,7 @@ export const SERVICE_SHOWCASES = {
         label: 'Polished Glam',
         name: 'Blow Dry',
         image: img('hair', 'blow-dry.png'),
+        bookingService: book('hair', 'Blowout'),
         description:
           'Enjoy a salon-quality blow dry that adds volume, smoothness, and shine to your hair. Perfect for achieving a polished and glamorous look for any occasion.',
       },
@@ -204,6 +222,7 @@ export const SERVICE_SHOWCASES = {
         label: 'Refresh Ritual',
         name: 'Hair Wash',
         image: img('hair', 'hair-wash.png'),
+        bookingService: book('hair', 'Hair Styling'),
         description:
           'Relax and refresh your hair with our gentle hair wash service. Our treatment deeply cleanses your hair and scalp, leaving your hair feeling fresh, soft, and revitalized.',
       },
@@ -212,6 +231,7 @@ export const SERVICE_SHOWCASES = {
         label: 'Smooth Treatment',
         name: 'Keratin Treatment',
         image: img('hair', 'keratin.png'),
+        bookingService: book('hair', 'Keratin Treatment'),
         description:
           'Experience silky, smooth, and manageable hair with our premium keratin treatment. It helps reduce frizz, restore shine, and give your hair a healthier appearance.',
       },
@@ -267,6 +287,7 @@ export const SERVICE_SHOWCASES = {
     tag: 'Nails',
     title: 'Nails',
     eyebrow: 'Luxury Nail Studio',
+    bookingService: book('nails', 'Gel Manicure'),
     description:
       'Elegant gels, custom acrylics, and artistic nail designs — polished to perfection for a look that feels refined, glamorous, and uniquely you.',
     heroImages: [img('nails', 'hero.png')],
@@ -281,6 +302,7 @@ export const SERVICE_SHOWCASES = {
         label: 'Signature Finish',
         name: 'Gel Nails',
         image: img('nails', 'gel.png'),
+        bookingService: book('nails', 'Gel Manicure'),
         description:
           'A glossy, salon-perfect finish that holds its shine — ideal when you want polished color with lasting beauty and a soft glam feel.',
         benefits: [
@@ -294,6 +316,7 @@ export const SERVICE_SHOWCASES = {
         label: 'Sculpted Style',
         name: 'Acrylic Nails',
         image: img('nails', 'acrylic.png'),
+        bookingService: book('nails', 'Basic Manicure'),
         description:
           'Strong, stylish extensions shaped to your preference — from classic length to bold statement sets with customizable designs.',
         benefits: [
@@ -307,6 +330,7 @@ export const SERVICE_SHOWCASES = {
         label: 'Creative Detail',
         name: 'Nail Art',
         image: img('nails', 'nail-art.png'),
+        bookingService: book('nails', 'Nail Art'),
         description:
           'Personalized artistry for every mood — florals, chrome, gems, and modern motifs crafted for an Instagram-worthy finish.',
         benefits: [
@@ -320,6 +344,7 @@ export const SERVICE_SHOWCASES = {
         label: 'Essential Care',
         name: 'Manicure Services',
         image: img('nails', 'manicure.png'),
+        bookingService: book('nails', 'Basic Manicure'),
         description:
           'Clean, healthy, and beautifully polished nails with careful prep and finishing touches that keep your hands looking elegant.',
         benefits: [
@@ -336,6 +361,7 @@ export const SERVICE_SHOWCASES = {
     tag: 'Lashes',
     title: 'Lashes',
     eyebrow: 'Luxury Lash Studio',
+    bookingService: book('lashes', 'Classic Full Set'),
     description:
       'Wake up glamorous — classic, hybrid, and volume sets customized for your eyes with a soft, feminine, high-end finish.',
     heroImages: [img('lashes', 'hero.png')],
@@ -346,6 +372,7 @@ export const SERVICE_SHOWCASES = {
         label: 'Signature Set',
         title: 'Luxury Volume Lashes',
         image: img('lashes', 'volume.png'),
+        bookingService: book('lashes', 'Volume Full Set'),
         description:
           'Create a bold and glamorous look with beautifully layered volume lashes designed for a fuller, dramatic effect.',
       },
@@ -354,6 +381,7 @@ export const SERVICE_SHOWCASES = {
         label: 'Timeless Soft Glam',
         title: 'Classic Lash Elegance',
         image: img('lashes', 'classic.png'),
+        bookingService: book('lashes', 'Classic Full Set'),
         description:
           'Enhance your natural beauty with timeless classic lashes that add length, definition, and a soft natural glamour to your eyes.',
       },
@@ -362,6 +390,7 @@ export const SERVICE_SHOWCASES = {
         label: 'Balanced Texture',
         title: 'Perfect Hybrid Blend',
         image: img('lashes', 'hybrid.png'),
+        bookingService: book('lashes', 'Hybrid Full Set'),
         description:
           'A beautiful combination of classic and volume techniques for a balanced, textured, and effortlessly stunning lash look.',
       },
@@ -370,6 +399,7 @@ export const SERVICE_SHOWCASES = {
         label: 'Natural Enhancement',
         title: 'Natural Lash Lift',
         image: img('lashes', 'lash-lift.png'),
+        bookingService: book('lashes', 'Lash Lift'),
         description:
           'Lift and enhance your natural lashes with a beautiful curl that creates a brighter, more open eye appearance.',
       },
@@ -378,6 +408,7 @@ export const SERVICE_SHOWCASES = {
         label: 'Custom Glam',
         title: 'Premium Lash Extensions',
         image: img('lashes', 'extensions.png'),
+        bookingService: book('lashes', 'Volume Full Set'),
         description:
           'Achieve a flawless eye transformation with customized lash extensions designed to match your preferred style.',
       },

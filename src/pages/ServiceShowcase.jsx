@@ -6,6 +6,7 @@ import { Autoplay, EffectFade, Pagination } from 'swiper/modules';
 import { getServiceShowcase } from '../data/serviceShowcases';
 import { useLightbox } from '../context/LightboxProvider';
 import LightboxImage from '../components/LightboxImage';
+import BookServiceLink from '../components/BookServiceLink';
 import SoftGlamHeroBackground from '../components/SoftGlamHeroBackground';
 import FacialTreatments from '../components/FacialTreatments';
 import NailsExperience from '../components/NailsExperience';
@@ -123,9 +124,12 @@ export default function ServiceShowcasePage() {
             variants={fadeInUp}
             transition={{ delay: 0.3 }}
           >
-            <Link to="/booking" className="btn btn--primary">
+            <BookServiceLink
+              serviceValue={service.bookingService}
+              className="btn btn--primary"
+            >
               Book Appointment
-            </Link>
+            </BookServiceLink>
           </motion.div>
         </div>
       </section>
@@ -138,7 +142,11 @@ export default function ServiceShowcasePage() {
       ) : isWaxing ? (
         <WaxingExperience services={service.waxServices} />
       ) : isHair ? (
-        <HairExperience services={service.hairServices} lookbook={service.lookbook} />
+        <HairExperience
+          services={service.hairServices}
+          lookbook={service.lookbook}
+          bookingService={service.bookingService}
+        />
       ) : isLashes ? (
         <LashesExperience services={service.lashServices} />
       ) : (
@@ -225,9 +233,12 @@ export default function ServiceShowcasePage() {
                   >
                     <h2 className="svc-feature__title">{section.title}</h2>
                     <p className="svc-feature__text">{section.text}</p>
-                    <Link to="/booking" className="btn btn--primary btn--sm">
+                    <BookServiceLink
+                      serviceValue={section.bookingService || service.bookingService}
+                      className="btn btn--primary btn--sm"
+                    >
                       Book Now
-                    </Link>
+                    </BookServiceLink>
                   </motion.div>
                 </div>
               </div>
@@ -249,9 +260,12 @@ export default function ServiceShowcasePage() {
             <h2>Ready for your {service.title.toLowerCase()} experience?</h2>
             <p>Book your appointment at LooksByLeema Beauty Studio in Queens, NY.</p>
             <div className="svc-cta__actions">
-              <Link to="/booking" className="btn btn--primary">
+              <BookServiceLink
+                serviceValue={service.bookingService}
+                className="btn btn--primary"
+              >
                 Book Appointment
-              </Link>
+              </BookServiceLink>
               <Link to="/services" className="btn btn--outline svc-cta__outline">
                 All Services
               </Link>
