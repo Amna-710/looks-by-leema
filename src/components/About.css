@@ -51,8 +51,8 @@
 }
 
 .about-founder .about__image .lightbox-image-trigger img {
-  object-fit: contain;
-  object-position: center top;
+  object-fit: cover;
+  object-position: center 28%;
 }
 
 .about__image:hover .lightbox-image-trigger img {
