@@ -13,8 +13,8 @@ export const serviceCategories = [
       { name: 'Root Touch-Up', price: '$45' },
       { name: 'Full Color', price: '$70' },
       { name: 'Keratin Treatment', price: '$150+' },
-      { name: 'Hair Styling', price: '$35' },
-      { name: 'Updo / Party Hairstyle', price: '$60' },
+      { name: 'Hair Styling', price: '$75' },
+      { name: 'Updo / Party Hairstyle', price: '$150' },
     ],
   },
   {
@@ -23,9 +23,9 @@ export const serviceCategories = [
     icon: '✦',
     services: [
       { name: 'Soft Glam', price: '$90' },
-      { name: 'Full Glam', price: '$110' },
+      { name: 'Full Glam', price: '$200' },
       { name: 'Party Makeup', price: '$120' },
-      { name: 'Bridal Makeup', price: '$180' },
+      { name: 'Bridal Makeup', price: '$500–$1000' },
       { name: 'Bridal Trial', price: '$120' },
       { name: 'Add-On Lashes', price: '$10' },
     ],
